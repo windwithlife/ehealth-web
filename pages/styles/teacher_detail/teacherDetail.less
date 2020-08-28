@@ -1,0 +1,70 @@
+.lecture_detail_con{
+    padding:20px;
+    .picture_con{
+        display: flex;
+        margin-top: 20px;
+        .picture_con_left{
+            width: 260px;
+            height: 180px;
+        }
+        .picture_con_right{
+            position: relative;
+            margin-left: 20px;
+            input{
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                z-index: 0;
+                width: 120px;
+                height: 48px;
+            }
+            .uploadBtn{
+                left: 140px !important;
+                pointer-events: visible !important;
+            }
+            .previewBtn{
+                width: 120px !important;
+                height: 48px;
+                text-align: center;
+                line-height: 48px;
+                font-size: 18px;
+                border-radius: 3px;
+                pointer-events: none;
+                position: absolute;
+                z-index: 1;
+                left: 0px;
+                top: 0px;
+                width: 100px;
+                background: #fff;
+            }
+        }
+    }
+    .base_info_con{
+        margin-top: 20px;
+        display: flex;
+        .base_info_con_left{
+            width: 260px;
+            height: 180px;
+        }
+        .base_info_con_right{
+            margin-left: 20px;
+            .base_info_con_right_small_con{
+                display: flex;
+                margin-bottom: 10px;
+                align-items: center;
+                .base_info_con_right_first{
+                    margin-right: 30px;
+                    width: 72px;
+                    text-align: right;
+                }
+                .base_info_con_right_second{
+                    .ant-input{
+                        width: 300px;
+                    }
+                }
+                
+            }
+
+        }
+    }
+}

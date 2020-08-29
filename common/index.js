@@ -1,6 +1,11 @@
 import axios from "axios";
 import { Form, Input, Button, Checkbox, Modal } from 'antd';
+import config from "../config.json"
 const isServer = typeof window == 'undefined';
+
+export function doHref(path=''){
+    location.href = `${location.origin}${config.baseUrl}/${path}` //首页登录成功处理
+}
 
 export function getTime(timeStamp = '') {
     const date = timeStamp ? new Date(timeStamp) : new Date();
@@ -61,11 +66,11 @@ function dealToken(result) {
         }
         case 1: {
             localStorage.setItem('token', token);
-            if (location.pathname == '/') location = `${location.origin}/lecture_setting` //首页登录成功处理
+            if (location.pathname == `${config.baseUrl}/index`) doHref('lecture_setting'); //首页登录成功处理
             return result;
         }
         case 2: {
-            if (!isServer) location.href = `${location.origin}/`
+            if (!isServer) doHref();
             else { }//TODO  302
             return result;
         }

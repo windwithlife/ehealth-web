@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/teacherSetting.less"
 import { Button } from 'antd';
+import {doHref} from "../../common/index"
 
 
 export default class teacherSetting extends React.Component{
@@ -11,10 +12,10 @@ export default class teacherSetting extends React.Component{
         super(props)
     }
     newSetUp(){
-        location.href = `${location.origin}/teacher_setting/add_teacher`;
+        doHref(`teacher_setting/add_teacher`);
     }
     goDetail(){
-        location.href = `${location.origin}/teacher_setting/teacher_detail`;
+        doHref(`teacher_setting/teacher_detail`);
     }
 
     render(){

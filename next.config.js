@@ -1,12 +1,19 @@
 //用于 Next 启动服务已经构建阶段，但是不作用于浏览器端。
-const withLess = require('@zeit/next-less')
-const lessToJS = require('less-vars-to-js')
-const fs = require('fs')
-const path = require('path')
+const withLess = require('@zeit/next-less');
+const {baseUrl} = require("./config.json")
 
 
 module.exports = withLess({
   lessLoaderOptions: { javascriptEnabled: true},
+  assetPrefix: baseUrl,
+  async rewrites() {
+    return [
+      {
+        source: `${baseUrl}/:slug*`,
+        destination: '/:slug*',
+      },
+    ]
+  },
   webpack: (config, { isServer }) => {
     if (isServer) {
       const antStyles = /antd\/.*?\/style.*?/

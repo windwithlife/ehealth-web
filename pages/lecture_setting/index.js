@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/lectureSetting.less"
 import { Button } from 'antd';
-import {invoke_post} from "../../common/index"
+import {invoke_post,doHref} from "../../common/index"
 
 
 export default class LectureSetting extends React.Component{
@@ -37,13 +37,13 @@ export default class LectureSetting extends React.Component{
         this.getliveList();
     }
     lookDetail(id){
-        location.href = `${location.origin}/lecture_setting/lecture_detail?id=${id}`;
+        doHref(`lecture_setting/lecture_detail?id=${id}`)
     }
     publish(){
 
     }
     newSetUp(){
-        location.href = `${location.origin}/lecture_setting/newBuildLecture`;
+        doHref(`lecture_setting/newBuildLecture`)
     }
     render(){
         let {liveList} = this.state;

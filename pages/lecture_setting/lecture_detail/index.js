@@ -7,6 +7,7 @@ const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 import QRCode from 'qrcode.react'
 import Item from "antd/lib/list/Item";
+import config from "../../../config.json"
 
 
 
@@ -180,7 +181,7 @@ export default class Index extends React.Component{
         return(
             <div className="lecture_detail_con">
                 <Breadcrumb separator=">">
-                    <Breadcrumb.Item href="/lecture_setting">讲座设置</Breadcrumb.Item>
+                    <Breadcrumb.Item href={`${config.baseUrl}/lecture_setting`}>讲座设置</Breadcrumb.Item>
                     <Breadcrumb.Item>讲座详情</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="picture_con">

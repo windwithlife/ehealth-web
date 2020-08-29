@@ -1,7 +1,8 @@
 import React from "react";
 import "../styles/advertiseSetting.less"
 import { Button } from 'antd';
-import {invoke_post} from "../../common/index"
+import {invoke_post,doHref} from "../../common/index"
+import config from "../../config.json";
 
 
 export default class LectureSetting extends React.Component{
@@ -15,13 +16,13 @@ export default class LectureSetting extends React.Component{
         super(props)
     }
     lookDetail(){
-        location.href = `${location.origin}/advertise_setting/advertise_detail`;
+        doHref('advertise_setting/advertise_detail');
     }
     publish(){
 
     }
     newSetUp(){
-        location.href = `${location.origin}/advertise_setting/add_advertise`;
+        doHref('advertise_setting/add_advertise');
     }
     render(){
         return(

@@ -5,6 +5,7 @@ import { Breadcrumb, Input, Select, DatePicker, Button ,Modal} from 'antd';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
+import config from "../../../config.json"
 
 
 
@@ -119,7 +120,7 @@ export default class Index extends React.Component {
         return (
             <div className="lecture_detail_con">
                 <Breadcrumb separator=">">
-                    <Breadcrumb.Item href="/lecture_setting">讲座设置</Breadcrumb.Item>
+                    <Breadcrumb.Item href={`${config.baseUrl}/lecture_setting`}>讲座设置</Breadcrumb.Item>
                     <Breadcrumb.Item>新建讲座</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="picture_con">

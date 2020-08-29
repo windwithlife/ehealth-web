@@ -3,7 +3,8 @@ const { Content, Sider, Footer } = Layout;
 import "./styles/wrap.less"
 import { reaction } from 'mobx';
 import { Button } from 'antd';
-
+import config from "../config.json";
+import {doHref} from "../common/index"
 
 
 const menuList = [{
@@ -44,14 +45,14 @@ export default class Wrap extends React.Component {
   }
 
   handleClick = ({ item, key, keyPath, domEvent }) => {
-    location.href = `${location.origin}/${key}`
+    doHref(key);
   }
 
   render() {
     const {pathArr,asPath} = this.props;
-    
-    const defaultSelectedKeys = pathArr[0] || ''
-    if(asPath == '/')  return  ( <>{this.props.children}</> )
+
+    const defaultSelectedKeys = pathArr[1] || ''
+    if(asPath == `${config.baseUrl}/index`)  return  ( <>{this.props.children}</> )
     return (
       <>   
         <Layout style={{ height: '100%'}}>

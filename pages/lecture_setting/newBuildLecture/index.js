@@ -96,6 +96,11 @@ export default class Index extends React.Component {
     async uploadLocalPic(type) { //上传本地图片
         try{
             const file = this.state[type];
+            if(!file){
+                Modal.info({content:'图片不能为空'});
+                return;
+            }
+
             let result = await uploadFile(file);
             const {data} = result;
             let picPath = data?.picPath;

@@ -66,11 +66,17 @@ export default class Index extends React.Component {
         this.lectureName = event.currentTarget.value;
     }
     async btnSaveClick() {
-        let {previewImgUrl,preview_huiyiricheng_imgurl,preview_huiyiyulan_imgurl} = this.state;
-        let {nowOfDay} = getTime(this.liveTimeOnOkVal)
-        console.log('nowOfDay: ', nowOfDay);
         try{
-            let result = await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/addLive',{
+            let {previewImgUrl,previewImgFile,
+                preview_huiyiricheng_imgurl,preview_huiyiricheng_file,
+                preview_huiyiyulan_imgurl,preview_huiyiyulan_file
+            } = this.state;
+            let {nowOfDay} = getTime(this.liveTimeOnOkVal);
+            if(!previewImgFile || !preview_huiyiricheng_file || !preview_huiyiyulan_file || !this.liveTimeOnOkVal || !this.lectureName){
+                Modal.info({content:'信息填写不完整'});
+                return
+            }
+            await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/addLive',{
                 roomTitle:this.lectureName,
                 roomPicPath:previewImgUrl, // 直播封面图片
                 roomSchedulePath:preview_huiyiricheng_imgurl, //

@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/lectureSetting.less"
-import { Button } from 'antd';
+import { Button,Modal } from 'antd';
 import {invoke_post,doHref} from "../../common/index"
 
 
@@ -10,6 +10,17 @@ export default class LectureSetting extends React.Component{
         this.currentPage = 1;
         this.state = {
             liveList:[]
+        }
+    }
+    async del(id){
+        try{
+            await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/updateLiveStatus',{ id:id, operationType:3});
+            let {liveList} = this.state;
+            let delEleIdx = liveList.findIndex(item=> item.id == id);
+            liveList.splice(delEleIdx,1);
+            this.setState({ liveList:liveList},()=>{ Modal.info({content:'删除成功'})})
+        }catch(error){
+            console.error('del-error: ', error);
         }
     }
     async getliveList(){
@@ -94,11 +105,17 @@ export default class LectureSetting extends React.Component{
                                 </div>
                                 <div className="content_con_right">
                                     <Button onClick={this.lookDetail.bind(this,item.id)}>查看详情</Button>
-                                    <Button onClick={this.publish.bind(this)}>
-                                        { item.roomStatus == 0 && ('未开始') }
-                                        { item.roomStatus == 1 && ('结束直播') }
-                                        { item.roomStatus == 2 && ('已结束') }
-                                    </Button>
+                                    <div style={{display:'flex'}}>
+                                        <Button onClick={this.publish.bind(this)}>
+                                            { item.roomStatus == 0 && ('未开始') }
+                                            { item.roomStatus == 1 && ('结束直播') }
+                                            { item.roomStatus == 2 && ('已结束') }
+                                        </Button>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <Button onClick={this.del.bind(this,item.id)}>
+                                        删除
+                                        </Button>
+                                    </div>
                                 </div>
                             </div> 
                         )

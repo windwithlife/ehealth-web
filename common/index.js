@@ -75,7 +75,6 @@ function dealToken(result) {
             return result;
         }
     }
-    
 }
 
 export async function invoke_post(url, params = {}) {

@@ -81,6 +81,7 @@ export default class LectureSetting extends React.Component{
                 <Button className="new_setup_btn" onClick={this.newSetUp.bind(this)}>新建会议</Button>
                 {
                     liveList.map((item,idx)=>{
+                        console.log('item: ', item);
                         return (
                             <div key={item.id} className="content_con">
                                 <div className="content_con_left">
@@ -107,9 +108,10 @@ export default class LectureSetting extends React.Component{
                                     <Button onClick={this.lookDetail.bind(this,item.id)}>查看详情</Button>
                                     <div style={{display:'flex'}}>
                                         <Button onClick={this.publish.bind(this)}>
-                                            { item.roomStatus == 0 && ('未开始') }
-                                            { item.roomStatus == 1 && ('结束直播') }
-                                            { item.roomStatus == 2 && ('已结束') }
+                                            { item.roomStatus == 2 && item.playNumber == 0 &&  ('立即发布') }
+                                            { item.roomStatus == 1 && ('直播中') }
+                                            { item.roomStatus == 2 && item.playNumber==1 && ('下架') }
+                                            { item.playNumber == 2 && ('已下架') }
                                         </Button>
                                         &nbsp;&nbsp;&nbsp;
                                         <Button onClick={this.del.bind(this,item.id)}>

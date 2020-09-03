@@ -72,7 +72,6 @@ export default class Index extends React.Component {
                 preview_huiyiyulan_imgurl,preview_huiyiyulan_file
             } = this.state;
             let {nowOfDay} = getTime(this.liveTimeOnOkVal);
-            console.log('previewImgFile: ', previewImgFile,preview_huiyiricheng_file,preview_huiyiyulan_file,this.liveTimeOnOkVal,this.lectureName);
             if(!previewImgFile || !preview_huiyiricheng_file || !preview_huiyiyulan_file || !this.liveTimeOnOkVal || !this.lectureName){
                
                 Modal.info({content:'信息填写不完整'});

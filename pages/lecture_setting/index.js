@@ -108,9 +108,9 @@ export default class LectureSetting extends React.Component{
                                     <Button onClick={this.lookDetail.bind(this,item.id)}>查看详情</Button>
                                     <div style={{display:'flex'}}>
                                         <Button onClick={this.publish.bind(this)}>
-                                            { item.roomStatus == 2 && item.playNumber == 0 &&  ('立即发布') }
+                                            { item.roomStatus == 2 && item.publishStatus == 0 &&  ('立即发布') }
                                             { item.roomStatus == 1 && ('直播中') }
-                                            { item.roomStatus == 2 && item.playNumber==1 && ('下架') }
+                                            { item.roomStatus == 2 && item.publishStatus == 1 && ('下架') }
                                             { item.playNumber == 2 && ('已下架') }
                                         </Button>
                                         &nbsp;&nbsp;&nbsp;

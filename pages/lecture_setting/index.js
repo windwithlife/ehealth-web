@@ -12,17 +12,7 @@ export default class LectureSetting extends React.Component{
             liveList:[]
         }
     }
-    async del(id){
-        try{
-            await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/updateLiveStatus',{ id:id, operationType:3});
-            let {liveList} = this.state;
-            let delEleIdx = liveList.findIndex(item=> item.id == id);
-            liveList.splice(delEleIdx,1);
-            this.setState({ liveList:liveList},()=>{ Modal.info({content:'删除成功'})})
-        }catch(error){
-            console.error('del-error: ', error);
-        }
-    }
+
     async getliveList(){
         try{
             let result = await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/getLiveList',{
@@ -50,8 +40,11 @@ export default class LectureSetting extends React.Component{
     lookDetail(id){
         doHref(`lecture_setting/lecture_detail?id=${id}`)
     }
-    publish(){
-
+    async publish(id,operationType){
+        await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/updateLiveStatus',{
+            id,operationType
+        });
+        location.reload();
     }
     newSetUp(){
         doHref(`lecture_setting/newBuildLecture`)
@@ -81,7 +74,34 @@ export default class LectureSetting extends React.Component{
                 <Button className="new_setup_btn" onClick={this.newSetUp.bind(this)}>新建会议</Button>
                 {
                     liveList.map((item,idx)=>{
-                        console.log('item: ', item);
+                        let btn_module = null;
+                        if(item.roomStatus == 1){
+                            btn_module = (
+                                <Button onClick={this.publish.bind(this,item.id,2)}>
+                                    直播结束
+                                </Button>
+                            )
+                        }
+                        if(item.roomStatus == 2 && item.publishStatus == 0){
+                            btn_module = (
+                                <>
+                                    <Button  onClick={this.publish.bind(this,item.id,1)}>
+                                            立即发布
+                                    </Button> &nbsp;&nbsp;&nbsp;
+                                    <Button  onClick={this.publish.bind(this,item.id,3)}>
+                                        下架
+                                    </Button>
+                                </>
+                            )
+                        }
+                        if(item.roomStatus == 2 && item.publishStatus == 1){
+                            btn_module = (
+                                <Button  onClick={this.publish.bind(this,item.id,3)}>
+                                    下架
+                                </Button>
+                            )
+                        }
+
                         return (
                             <div key={item.id} className="content_con">
                                 <div className="content_con_left">
@@ -91,6 +111,9 @@ export default class LectureSetting extends React.Component{
                                             { item.roomStatus == 0 && ('未开始') }
                                             { item.roomStatus == 1 && ('直播中') }
                                             { item.roomStatus == 2 && ('已结束') }
+                                            { item.publishStatus == 0 && (' 未发布') }
+                                            { item.publishStatus == 1 && (' 已发布') }
+                                            { item.publishStatus == 2 && (' 已下架') }
                                         </div>
                                     </div>
                                     <div className="content_con_left_total_con">
@@ -107,16 +130,7 @@ export default class LectureSetting extends React.Component{
                                 <div className="content_con_right">
                                     <Button onClick={this.lookDetail.bind(this,item.id)}>查看详情</Button>
                                     <div style={{display:'flex'}}>
-                                        <Button onClick={this.publish.bind(this)}>
-                                            { item.roomStatus == 2 && item.publishStatus == 0 &&  ('立即发布') }
-                                            { item.roomStatus == 1 && ('直播中') }
-                                            { item.roomStatus == 2 && item.publishStatus == 1 && ('下架') }
-                                            { item.playNumber == 2 && ('已下架') }
-                                        </Button>
-                                        &nbsp;&nbsp;&nbsp;
-                                        <Button onClick={this.del.bind(this,item.id)}>
-                                        删除
-                                        </Button>
+                                        {btn_module}
                                     </div>
                                 </div>
                             </div> 

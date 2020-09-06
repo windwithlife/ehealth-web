@@ -15,7 +15,7 @@ export default class LectureSetting extends React.Component{
 
     async getliveList(){
         try{
-            let result = await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/getLiveList',{
+            let result = await invoke_post('liveService/getLiveList',{
                 currentPage:this.currentPage,
                 pageSize:10,
             });
@@ -41,7 +41,7 @@ export default class LectureSetting extends React.Component{
         doHref(`lecture_setting/lecture_detail?id=${id}`)
     }
     async publish(id,operationType){
-        await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/updateLiveStatus',{
+        await invoke_post('liveService/updateLiveStatus',{
             id,operationType
         });
         location.reload();

@@ -83,7 +83,7 @@ export default class Index extends React.Component{
     async componentDidMount(){
         try{
             let {id} = getQuery();
-            let result = await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/getLiveDetail',{id})
+            let result = await invoke_post('liveService/getLiveDetail',{id})
             let data = result?.data || {};
             let {roomPicPath,roomQrCodePath,roomSchedulePath,roomDescPath} = data;
             let {modules} = this.state;
@@ -142,7 +142,7 @@ export default class Index extends React.Component{
                 params.roomTitle = roomTitle;
             }
             
-            await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/updateLive',params);
+            await invoke_post('liveService/updateLive',params);
             Modal.info({content:'修改成功'});
         }catch(error){
             console.log('btnSaveClick_error: ', error);

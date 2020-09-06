@@ -9,41 +9,69 @@ export default class LectureSetting extends React.Component{
     static async getInitialProps({router ,req ,res, initializeStoreObj}) {
         return {}
     }
-    componentDidMount(){
-        invoke_post('advertService/getAdvertList')
-    }
     constructor(props){
         super(props)
+        this.currentPage = 1;
+        this.state = {
+            liveList:[]
+        }
     }
-    lookDetail(){
-        doHref('advertise_setting/advertise_detail');
+    async getliveList(){
+        try{
+            let result = await invoke_post('advertService/getAdvertList',{
+                currentPage:this.currentPage,
+                pageSize:10,
+            });
+            let data = result?.data || {};
+            let {totalPage,advertList} = data;
+            let now_advertList = this.state.liveList;
+            this.setState({
+                liveList:now_advertList.concat(advertList)
+            },()=>{
+                if(this.currentPage<totalPage) {
+                    this.currentPage++;
+                    this.getliveList();
+                }
+            })
+        }catch(error){
+            console.error('onFinish-error: ', error);
+        }
     }
-    publish(){
+    componentDidMount(){
+        this.getliveList();
+    }
+    lookDetail(id){
+        doHref(`advertise_setting/advertise_detail?id=${id}`);
+    }
 
-    }
     newSetUp(){
         doHref('advertise_setting/add_advertise');
     }
     render(){
+        let {liveList} = this.state;
+
         return(
             <div className="lecture_setting_con">
-                <Button className="new_setup_btn" onClick={this.newSetUp.bind(this)}>新建讲座</Button>
+                <Button className="new_setup_btn" onClick={this.newSetUp.bind(this)}>新增广告</Button>
                 {
-                    [1,2,3,4,5].map(()=>{
+                    liveList.map((item,idx)=>{
                         return (
-                            <div className="content_con">
+                            <div className="content_con" key={idx}>
                                 <div className="content_con_left">
                                     <div className="content_con_left_img_con">
-                                        <img className="img_base" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1235257593,3415073461&fm=26&gp=0.jpg"></img>
+                                        <img className="img_base" src={item?.advPicPath}></img>
                                     </div>
                                     <div className="content_con_left_total_con">
-                                        跳转链接<br />
-                                        https://www.baidu.com/?tn=02003390_43_hao_pg
+                                        <h1>{item?.advTitle}</h1>
                                     </div>
                                 </div>
                                 <div className="content_con_right">
-                                    <Button onClick={this.lookDetail.bind(this)}>编辑</Button>
-                                    <Button onClick={this.publish.bind(this)}>删除</Button>
+                                    {/* <Button onClick={this.lookDetail.bind(this,item.id)}>编辑广告</Button> */}
+                                    <div className="info_con">
+                                        <span>开始时间 {item?.startDate}</span>&nbsp;&nbsp;&nbsp;
+                                        <span>结束时间 {item?.endDate}</span>
+                                    </div>
+                                    {/* <Button onClick={this.publish.bind(this)}>删除</Button> */}
                                 </div>
                             </div> 
                         )

@@ -21,7 +21,7 @@ export default class Login extends React.Component{
     async onFinish(valueObj){
         try{
             const {userPassword,userName} = valueObj;
-            invoke_post('https://service.koudaibook.com/meeting-server/pc/userService/userLogin',{ userPassword,userName})
+            invoke_post('userService/userLogin',{ userPassword,userName})
         }catch(error){
             console.error('onFinish-error: ', error);
         }

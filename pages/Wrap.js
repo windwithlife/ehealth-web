@@ -10,13 +10,13 @@ import {doHref} from "../common/index"
 const menuList = [{
     desc:"会议设置",
     key:"lecture_setting", //匹配以 /lecture_setting开头的所有路由
+  },{
+    desc:"广告设置",
+    key:"advertise_setting",
   }
   // ,{
   //   desc:"讲师设置",
   //   key:"teacher_setting",
-  // },{
-  //   desc:"广告设置",
-  //   key:"advertise_setting",
   // },{
   //   desc:"咨询编辑",
   //   key:"consult_edit",

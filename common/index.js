@@ -80,6 +80,7 @@ function dealToken(result) {
 export async function invoke_post(url, params = {}) {
     try {
         Loading.show();
+        let urlPrefix = 'https://service.e-healthcare.net/meeting-server/pc/'
         axios.defaults.withCredentials = true;
         axios.defaults.crossDomain = true;
         let token = localStorage.getItem('token');
@@ -88,7 +89,7 @@ export async function invoke_post(url, params = {}) {
                 'Content-Type': 'application/json'
             },
             method: 'post',
-            url,
+            url:`${urlPrefix}${url}`,
             data: { platType: 4, category: 1, version: 1, platForm: "web", token, data: params }
         }).then(checkStatus).then(dealToken)
         Loading.hide();
@@ -108,8 +109,7 @@ export async function uploadFile(file) {
         let json = { token, platType: 4, category: 1, version: 1, platForm: "web" };
         formData.append('json', JSON.stringify(json))
         formData.append('file', file);
-
-        let result = await axios.post('https://service.koudaibook.com/meeting-server/uploadService/uploadImage', formData, {
+        let result = await axios.post('https://service.e-healthcare.net/meeting-server/uploadService/uploadImage', formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         }).then(checkStatus).then(dealToken)
         Loading.hide();

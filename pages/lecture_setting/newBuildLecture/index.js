@@ -77,7 +77,7 @@ export default class Index extends React.Component {
                 Modal.info({content:'信息填写不完整'});
                 return
             }
-            await invoke_post('https://service.koudaibook.com/meeting-server/pc/liveService/addLive',{
+            await invoke_post('liveService/addLive',{
                 roomTitle:this.lectureName,
                 roomPicPath:previewImgUrl, // 直播封面图片
                 roomSchedulePath:preview_huiyiricheng_imgurl, //

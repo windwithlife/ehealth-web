@@ -18,15 +18,15 @@ export default class LectureSetting extends React.Component{
     }
     async getliveList(){
         try{
-            let result = await invoke_post('advertService/getAdvertList',{
+            let result = await invoke_post('advertService/getInformationList',{
                 currentPage:this.currentPage,
                 pageSize:10,
             });
             let data = result?.data || {};
-            let {totalPage,advertList} = data;
+            let {totalPage,informationList} = data;
             let now_advertList = this.state.liveList;
             this.setState({
-                liveList:now_advertList.concat(advertList)
+                liveList:now_advertList.concat(informationList)
             },()=>{
                 if(this.currentPage<totalPage) {
                     this.currentPage++;
@@ -49,6 +49,15 @@ export default class LectureSetting extends React.Component{
     }
     render(){
         let {liveList} = this.state;
+        // “id”:int 资讯ID,
+        //  “advTitle”:String 资讯标题,
+        //  “advPicPath”:String  资讯图片,
+        //  “advDesc”:String  资讯内容(html格式,前端提供富文本编辑框)
+        //  “advSource”:String 资讯地址(生成的Html链接)
+        //  “startDate”：Date  开始时间,
+        //  “endDate”:Date  结束时间,
+        //  “advStatus”:int 状态(0:禁用 1:正常 -1:删除)
+        //  “advOrder”:int 排序
 
         return(
             <div className="lecture_setting_con">
@@ -63,15 +72,11 @@ export default class LectureSetting extends React.Component{
                                     </div>
                                     <div className="content_con_left_total_con">
                                         <h1>{item?.advTitle}</h1>
+                                        <div className="info_con">
+                                            <span>开始时间 {item?.startDate}</span>&nbsp;&nbsp;&nbsp;
+                                            <span>结束时间 {item?.endDate}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="content_con_right">
-                                    {/* <Button onClick={this.lookDetail.bind(this,item.id)}>编辑广告</Button> */}
-                                    <div className="info_con">
-                                        <span>开始时间 {item?.startDate}</span>&nbsp;&nbsp;&nbsp;
-                                        <span>结束时间 {item?.endDate}</span>
-                                    </div>
-                                    {/* <Button onClick={this.publish.bind(this)}>删除</Button> */}
                                 </div>
                             </div> 
                         )

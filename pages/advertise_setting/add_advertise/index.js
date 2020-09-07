@@ -77,12 +77,15 @@ export default class Index extends React.Component {
                 Modal.info({ content: '信息填写不完整' });
                 return
             }
-            await invoke_post('liveService/addLive',{
+
+            await invoke_post('advertService/addInformation',{
                 advTitle:this.advTitle,
                 advPicPath:previewImgUrl,
                 advDesc:advDesc,
                 startDate:this.startTime,
                 endDate:this.endTime ,
+                advStatus:1, //0:禁用 1:正常 -1:删除)
+                advOrder:1,
             })
             Modal.info({content:'保存成功'});
         }catch(error){

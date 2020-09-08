@@ -11,7 +11,7 @@ const menuList = [{
     desc:"会议设置",
     key:"lecture_setting", //匹配以 /lecture_setting开头的所有路由
   },{
-    desc:"广告设置",
+    desc:"新闻设置",
     key:"advertise_setting",
   }
   // ,{

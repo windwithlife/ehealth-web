@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/advertiseSetting.less"
-import { Button } from 'antd';
+import { Button,Modal } from 'antd';
 import {invoke_post,doHref} from "../../common/index"
 import config from "../../config.json";
 
@@ -43,7 +43,10 @@ export default class LectureSetting extends React.Component{
     lookDetail(id){
         doHref(`advertise_setting/advertise_detail?id=${id}`);
     }
-
+    async deleteClick(id){
+        await invoke_post('advertService/deleteInformation',{ id:id})
+        Modal.info({ content: '删除成功' });
+    }
     newSetUp(){
         doHref('advertise_setting/add_advertise');
     }
@@ -61,7 +64,7 @@ export default class LectureSetting extends React.Component{
 
         return(
             <div className="lecture_setting_con">
-                <Button className="new_setup_btn" onClick={this.newSetUp.bind(this)}>新增广告</Button>
+                <Button className="new_setup_btn" onClick={this.newSetUp.bind(this)}>新增新闻</Button>
                 {
                     liveList.map((item,idx)=>{
                         return (
@@ -75,6 +78,12 @@ export default class LectureSetting extends React.Component{
                                         <div className="info_con">
                                             <span>开始时间 {item?.startDate}</span>&nbsp;&nbsp;&nbsp;
                                             <span>结束时间 {item?.endDate}</span>
+                                            {item.advStatus == 1 && (
+                                                <div style={{marginTop:"6px"}}>
+                                                    <Button onClick={this.deleteClick.bind(this,item.id)}>删除新闻</Button>
+                                                </div>
+                                            )}
+
                                         </div>
                                     </div>
                                 </div>

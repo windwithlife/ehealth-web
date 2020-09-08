@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/newBuildLecture/newBuildLecture.less"
-import {invoke_post,uploadFile,getTime} from "../../../common/index"
+import {invoke_post,uploadFile,getTime,doHref} from "../../../common/index"
 import { Breadcrumb, Input, Select, DatePicker, Button ,Modal} from 'antd';
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -84,7 +84,7 @@ export default class Index extends React.Component {
                 roomDescPath:preview_huiyiyulan_imgurl, 
                 liveStartDate:nowOfDay
             })
-            Modal.info({content:'保存成功'});
+            doHref('lecture_setting');
         }catch(error){
             console.error('onFinish-error: ', error);
         }

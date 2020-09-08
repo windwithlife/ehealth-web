@@ -96,8 +96,8 @@ export default class Index extends React.Component{
                 return item;
             })
             this.setState({
+                roomQrCodePath:`http://www.koudaibook.com/ehealth_h5/live?id=${id}`,
                 module:newModules,
-                roomQrCodePath:roomQrCodePath,
                 previewImgUrl:roomPicPath,
                 preview_huiyiricheng_imgurl:roomSchedulePath,
                 preview_huiyiyulan_imgurl:roomDescPath
@@ -201,14 +201,10 @@ export default class Index extends React.Component{
                 </div>
                 <div className="base_info_con">
                     <div className="base_info_con_left">
-                        {
-                            !!roomQrCodePath && (
-                                <div className="qrcode_con" style={{marginTop:'20px'}}>
-                                    <div className="qrcode_desc">会议二维码</div>   
-                                    <img style={{width: '240px',height: '240px'}} src={roomQrCodePath} />
-                                </div>
-                            )
-                        }
+                        <div className="qrcode_con" style={{marginTop:'20px'}}>
+                            <div className="qrcode_desc">会议二维码</div>   
+                            <QRCode size={240} value={roomQrCodePath} />
+                        </div>
                     </div>
                     <div className="base_info_con_right">
                         {

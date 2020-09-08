@@ -2,7 +2,7 @@ import React from "react";
 import "../../styles/add_advertise/addAdvertise.less"
 
 import { Breadcrumb, Input, Select, DatePicker, Button, Modal } from 'antd';
-import { uploadFile, getTime, invoke_post } from "../../../common/index"
+import { uploadFile, getTime, invoke_post,doHref } from "../../../common/index"
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
@@ -87,7 +87,7 @@ export default class Index extends React.Component {
                 advStatus:1, //0:禁用 1:正常 -1:删除)
                 advOrder:1,
             })
-            Modal.info({content:'保存成功'});
+            doHref('advertise_setting');
         }catch(error){
             console.log('error: ', error);
         }

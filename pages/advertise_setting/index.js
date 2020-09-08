@@ -83,6 +83,21 @@ export default class LectureSetting extends React.Component{
                                                     <Button onClick={this.deleteClick.bind(this,item.id)}>删除新闻</Button>
                                                 </div>
                                             )}
+                                            {
+                                                item.advStatus == -1 && (
+                                                    <div style={{marginTop:"6px"}}>
+                                                        已删除
+                                                    </div>
+                                                )
+                                            }
+                                            {
+                                                item.advStatus == 0 && (
+                                                    <div style={{marginTop:"6px"}}>
+                                                        禁用
+                                                    </div>
+                                                )
+                                            }
+                                            
 
                                         </div>
                                     </div>

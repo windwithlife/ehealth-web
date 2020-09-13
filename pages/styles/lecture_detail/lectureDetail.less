@@ -1,119 +1,133 @@
+@import "../minix.less";
 .lecture_detail_con{
-    padding:20px;
-    .qrcode_con{
-        margin-top: 20px;
-        text-align: center;
-        .qrcode_desc{
-            padding: 10px 0px;
-        }
+    padding: 28px 40px 0px 40px;
+    .lecture_detail_wrap{
+        margin-top: 28px;
+        background-color: #fff;
+        padding: 20px 30px;
+    }
+    .save_btn{
+        padding: 4px 28px;
+        background: @base_color_blue;
+        color: #fff;
     }
     .picture_con_right{
         position: relative;
-        margin-left: 20px;
-        height: 48px;
-        width: 280px;
+        margin-left: 30px;
+        height: 180px;
+        flex-grow: 1;
+        display: flex;
+        justify-content: space-between;
+        .qrcode_con{
+            text-align: center;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
         input{
             position: absolute;
-            top: 0px;
             left: 0px;
             z-index: 0;
-            width: 120px;
-            height: 48px;
+            width: 84px;
+            height: 30px;
+            border-radius: 13px;
+            bottom: 0px;
         }
         .uploadBtn{
-            left: 140px !important;
             pointer-events: visible !important;
+            background-color: @base_color_blue !important;
+            bottom: 42px !important;
         }
         .previewBtn{
-            width: 120px !important;
-            height: 48px;
+            color: #fff;
+            padding: 4px 28px;
+            border-radius: 13px;
             text-align: center;
-            line-height: 48px;
-            font-size: 18px;
-            border-radius: 3px;
+            font-size: 14px;
             pointer-events: none;
             position: absolute;
             z-index: 1;
             left: 0px;
-            top: 0px;
-            width: 100px;
-            background: #fff;
+            bottom: 0px;
+            // line-height: 1;
+            background-color: @base_color_orange;
         }
     }
     .picture_con{
         display: flex;
-        margin-top: 20px;
+        align-items: flex-end;
+        padding-bottom: 20px;
+        border-bottom: 1px solid @base_color_grey;
         .picture_con_left{
             width: 260px;
             height: 180px;
         }
-        // .picture_con_right{
-        //     position: relative;
-        //     margin-left: 20px;
-        //     input{
-        //         position: absolute;
-        //         top: 0px;
-        //         left: 0px;
-        //         z-index: 0;
-        //         width: 120px;
-        //         height: 48px;
-        //     }
-        //     .uploadBtn{
-        //         left: 140px !important;
-        //         pointer-events: visible !important;
-        //     }
-        //     .previewBtn{
-        //         width: 120px !important;
-        //         height: 48px;
-        //         text-align: center;
-        //         line-height: 48px;
-        //         font-size: 18px;
-        //         border-radius: 3px;
-        //         pointer-events: none;
-        //         position: absolute;
-        //         z-index: 1;
-        //         left: 0px;
-        //         top: 0px;
-        //         width: 100px;
-        //         background: #fff;
-        //     }
-        // }
     }
     .base_info_con{
         margin-top: 20px;
         display: flex;
-        .base_info_con_left{
-            width: 260px;
-            height: 180px;
-        }
+        // .base_info_con_left{
+        //     width: 260px;
+        //     height: 180px;
+        // }
         .base_info_con_right{
-            margin-left: 20px;
+            flex-grow: 1;
             .base_info_con_right_small_con{
                 display: flex;
-                margin-bottom: 10px;
-                align-items: center;
-                .picture_con_right{
-                    margin-left: 0px;
-                    margin-top: 10px;
-                }
+                margin-bottom: 20px;
                 .img_con{
-                    width: 260px;
-                    height: 180px;
-                    margin-top: 10px;
+                    width: 62%;
+                    margin-top: 16px;
                 }
                 .base_info_con_right_small_con_left{
                     position: relative;
+                    flex-grow: 1;
+                    .desc_con{
+                        display: flex;
+                        align-items: center;
+                        margin-right: 60px;
+                        .desc{
+                           
+                        }
+                        .base_btn{
+                            padding: 4px 28px;
+                            border-radius: 13px;
+                            color: #fff;
+                        }
+                        .upload_btn{
+                            margin-left: 20px;
+                            background: @base_color_blue;
+                        }
+                        .preview_con{
+                            margin-left: 20px;
+                            input{
+                                position: absolute;
+                                width: 84px;
+                                height: 30px;
+                                border-radius: 13px;
+                            }
+                            .preview_btn{
+                                background: @base_color_orange;
+                                position: relative;
+                                pointer-events: none;
+                            }
+                        }
+                    }
                 }
                 .base_info_con_right_small_con_right{
                     position: relative;
                 }
                 .base_info_con_right_first{
-                    margin-right: 30px;
                     width: 72px;
+                    font-size: 14px;
+                    text-align: center;
                 }
                 .base_info_con_right_second{
+                    width: 100%;
                     .ant-input{
-                        width: 300px;
+                        width: 70%;
+                        height: 24px;
                     }
                 }
             }

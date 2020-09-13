@@ -39,13 +39,13 @@ export default class Index extends React.Component{
 
         this.state = {
             roomQrCodePath: "",
-            previewImgUrl: 'http://images.koudaibook.com/images/2020/08/05/images20080520490978428.jpg',
+            previewImgUrl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313123054940.png',
             previewImgFile: null,
 
-            preview_huiyiricheng_imgurl: 'http://images.koudaibook.com/images/2020/08/05/images20080520503391470.jpg',
+            preview_huiyiricheng_imgurl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313112259671.png',
             preview_huiyiricheng_file: null,
 
-            preview_huiyiyulan_imgurl: 'http://images.koudaibook.com/images/2020/08/05/images20080520510262551.jpg',
+            preview_huiyiyulan_imgurl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313295955926.png',
             preview_huiyiyulan_file: null,
 
             modules:[{
@@ -96,7 +96,7 @@ export default class Index extends React.Component{
                 return item;
             })
             this.setState({
-                roomQrCodePath:`http://www.koudaibook.com/ehealth_h5/live?id=${id}`,
+                roomQrCodePath:`http://m.e-healthcare.net/ehealth_h5/live?id=${id}`,
                 module:newModules,
                 previewImgUrl:roomPicPath,
                 preview_huiyiricheng_imgurl:roomSchedulePath,
@@ -188,127 +188,124 @@ export default class Index extends React.Component{
                     <Breadcrumb.Item href={`${config.baseUrl}/lecture_setting`}>讲座设置</Breadcrumb.Item>
                     <Breadcrumb.Item>讲座详情</Breadcrumb.Item>
                 </Breadcrumb>
-                <div className="picture_con">
-                    <div className="picture_con_left">
-                        <img className="img_base" src={previewImgUrl}></img>
-                    </div>
-                    <div className="picture_con_right">
-                        {/* <Button>预览</Button> */}
-                        <div className="previewBtn">预览</div>
-                        <div onClick={this.uploadLocalPic.bind(this, 'previewImgFile')} className="previewBtn uploadBtn">上传</div>
-                        <input type="file" onChange={this.selectedLocalPic.bind(this, 'previewImgFile', 'previewImgUrl')}></input>
-                    </div>
-                </div>
-                <div className="base_info_con">
-                    <div className="base_info_con_left">
-                        <div className="qrcode_con" style={{marginTop:'20px'}}>
-                            <div className="qrcode_desc">会议二维码</div>   
-                            <QRCode size={240} value={roomQrCodePath} />
+                <div className="lecture_detail_wrap">
+                    <div className="picture_con">
+                        <div className="picture_con_left">
+                            <img className="img_base" src={previewImgUrl}></img>
+                        </div>
+                        <div className="picture_con_right">
+                            <div>
+                                <div className="previewBtn">预览</div>
+                                <div onClick={this.uploadLocalPic.bind(this, 'previewImgFile')} className="previewBtn uploadBtn">上传</div>
+                                <input type="file" onChange={this.selectedLocalPic.bind(this, 'previewImgFile', 'previewImgUrl')}></input>
+                            </div>
+                            <div className="qrcode_con">
+                                <div className="qrcode_desc">会议二维码</div>   
+                                <QRCode size={150} value={roomQrCodePath} />
+                            </div>
                         </div>
                     </div>
-                    <div className="base_info_con_right">
-                        {
-                             modules.map((module)=>{
-                                switch(module.rightType){
-                                    case "text" :
-                                        return (
-                                            <div key={module.leftDesc} className="base_info_con_right_small_con">
-                                                <div className="base_info_con_right_first">{module.leftDesc}</div>
-                                                <div className="base_info_con_right_second">{module.rightDesc}</div>
-                                            </div>
-                                        )
-                                    break;
-                                    case 'input' :
+                    <div className="base_info_con">
+                        <div className="base_info_con_right">
+                            {
+                                modules.map((module)=>{
+                                    switch(module.rightType){
+                                        case "text" :
+                                            return (
+                                                <div key={module.leftDesc} className="base_info_con_right_small_con">
+                                                    <div className="base_info_con_right_first">{module.leftDesc}</div>
+                                                    <div className="base_info_con_right_second">{module.rightDesc}</div>
+                                                </div>
+                                            )
+                                        case 'input' :
+                                                return (
+                                                    <div key={module.leftDesc} className="base_info_con_right_small_con">
+                                                        <div className="base_info_con_right_first">{module.leftDesc}</div>
+                                                        <div className="base_info_con_right_second">
+                                                            <input style={{width:"300px"}} placeholder={module.defalutVal} onChange={module.bindEvent}/>
+                                                        </div>
+                                                    </div>
+                                                ) 
+                                        case 'select' :
                                             return (
                                                 <div key={module.leftDesc} className="base_info_con_right_small_con">
                                                     <div className="base_info_con_right_first">{module.leftDesc}</div>
                                                     <div className="base_info_con_right_second">
-                                                        <input style={{width:"300px"}} placeholder={module.defalutVal} onChange={module.bindEvent}/>
+                                                        <Select showSearch style={{ width: 300 }} placeholder="Select a person" 
+                                                            optionFilterProp="children" onChange={module.bindEvent}
+                                                            filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} >
+                                                                {
+                                                                    module.options.map(option=>{
+                                                                        return (
+                                                                            <Option key={option}>{option}</Option>
+                                                                        )
+                                                                    })
+                                                                }
+                                                        </Select>
                                                     </div>
                                                 </div>
-                                            ) 
-                                    break;
-                                    case 'select' :
-                                        return (
-                                            <div key={module.leftDesc} className="base_info_con_right_small_con">
-                                                <div className="base_info_con_right_first">{module.leftDesc}</div>
-                                                <div className="base_info_con_right_second">
-                                                    <Select showSearch style={{ width: 300 }} placeholder="Select a person" 
-                                                        optionFilterProp="children" onChange={module.bindEvent}
-                                                        filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} >
-                                                            {
-                                                                module.options.map(option=>{
-                                                                    return (
-                                                                        <Option key={option}>{option}</Option>
-                                                                    )
-                                                                })
-                                                            }
-                                                    </Select>
-                                                </div>
-                                            </div>
-                                        )
-                                    break;
-                                    case 'datePick' :
-                                        return (
-                                            <div key={module.leftDesc} className="base_info_con_right_small_con">
-                                                <div className="base_info_con_right_first">{module.leftDesc}</div>
-                                                <div className="base_info_con_right_second">
-                                                    <DatePicker placeholder={module.defalutVal} showTime style={{width:300}}
-                                                        onOk={module.bindEvent} />
-                                                </div>
-                                            </div>
-                                        )
-                                    break;
-                                    case 'textarea' :
-                                        return (
-                                            <div key={module.leftDesc} className="base_info_con_right_small_con">
-                                                <div className="base_info_con_right_first">{module.leftDesc}</div>
-                                                <div className="base_info_con_right_second">
-                                                    <TextArea style={{ width: 300,height:120 }} onChange={module.bindEvent}></TextArea>
-                                                </div>
-                                            </div>
-                                        )
-                                    break;
-                                    case 'button' : 
-                                        return (
-                                            <div key={module.leftDesc} className="base_info_con_right_small_con">
-                                                <div className="base_info_con_right_first">
-                                                    <Button onClick={module.bindEvent}>保存</Button>
-                                                </div>
-                                            </div>
-                                        )
-                                    break;
-                                    case "upload_img" :
-                                        return (
-                                            <div className="base_info_con_right_small_con">
-                                                <div  className="base_info_con_right_small_con_left">
-                                                    <div>会议日程</div>
-                                                    <div className="picture_con_right">
-                                                        <div className="previewBtn">预览</div>
-                                                        <div onClick={this.uploadLocalPic.bind(this, 'preview_huiyiricheng_file')} className="previewBtn uploadBtn">上传</div>
-                                                        <input type="file" onChange={this.selectedLocalPic.bind(this, 'preview_huiyiricheng_file', 'preview_huiyiricheng_imgurl')}></input>
-                                                    </div>
-                                                    <div className="img_con">
-                                                        <img className="img_base" src={preview_huiyiricheng_imgurl}></img>
+                                            )
+                                        case 'datePick' :
+                                            return (
+                                                <div key={module.leftDesc} className="base_info_con_right_small_con">
+                                                    <div className="base_info_con_right_first">{module.leftDesc}</div>
+                                                    <div className="base_info_con_right_second">
+                                                        <DatePicker placeholder={module.defalutVal} showTime style={{width:300}}
+                                                            onOk={module.bindEvent} />
                                                     </div>
                                                 </div>
-                                                <div className="base_info_con_right_small_con_left">
-                                                    <div>会议介绍</div>
-                                                    <div className="picture_con_right">
-                                                        <div className="previewBtn">预览</div>
-                                                        <div onClick={this.uploadLocalPic.bind(this, 'preview_huiyiyulan_file')} className="previewBtn uploadBtn">上传</div>
-                                                        <input type="file" onChange={this.selectedLocalPic.bind(this, 'preview_huiyiyulan_file', 'preview_huiyiyulan_imgurl')}></input>
-                                                    </div>
-                                                    <div className="img_con">
-                                                        <img className="img_base" src={preview_huiyiyulan_imgurl}></img>
+                                            )
+                                        case 'textarea' :
+                                            return (
+                                                <div key={module.leftDesc} className="base_info_con_right_small_con">
+                                                    <div className="base_info_con_right_first">{module.leftDesc}</div>
+                                                    <div className="base_info_con_right_second">
+                                                        <TextArea style={{ width: 300,height:120 }} onChange={module.bindEvent}></TextArea>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    break;
-                                }
-                             })
-                        }
+                                            )
+                                        case 'button' : 
+                                            return (
+                                                <div key={module.leftDesc} className="base_info_con_right_small_con">
+                                                     <div className="save_btn" onClick={module.bindEvent}>保存</div>
+                                                </div>
+                                            )
+                                        case "upload_img" :
+                                            return (
+                                                <div className="base_info_con_right_small_con">
+                                                    <div  className="base_info_con_right_small_con_left">
+                                                        <div className="desc_con">
+                                                            <span className="desc">会议日程</span> 
+                                                            <span onClick={this.uploadLocalPic.bind(this, 'preview_huiyiricheng_file')} className="upload_btn base_btn">上传</span>
+                                                            <span className="preview_con">
+                                                                <input type="file" onChange={this.selectedLocalPic.bind(this, 'preview_huiyiricheng_file', 'preview_huiyiricheng_imgurl')}></input>
+                                                                <div className="preview_btn base_btn">预览</div> 
+                                                            </span>
+                                                        </div>
+                                                        <div className="img_con">
+                                                            <img className="img_base" src={preview_huiyiricheng_imgurl}></img>
+                                                        </div>
+                                                    </div>
+    
+                                                    <div  className="base_info_con_right_small_con_left">
+                                                        <div className="desc_con">
+                                                            <span className="desc">会议介绍</span> 
+                                                            <span onClick={this.uploadLocalPic.bind(this, 'preview_huiyiyulan_file')} className="upload_btn base_btn" >上传</span>
+                                                            <span className="preview_con">
+                                                                <input type="file" onChange={this.selectedLocalPic.bind(this, 'preview_huiyiyulan_file', 'preview_huiyiyulan_imgurl')}></input>
+                                                                <div className="preview_btn base_btn">预览</div> 
+                                                            </span>
+                                                        </div>
+                                                        <div className="img_con">
+                                                            <img className="img_base" src={preview_huiyiyulan_imgurl}></img>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                    }
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

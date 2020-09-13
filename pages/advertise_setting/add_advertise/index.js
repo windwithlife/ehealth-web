@@ -21,7 +21,7 @@ export default class Index extends React.Component {
         this.startTime = null;
 
         this.state = {
-            previewImgUrl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313123054940.png',
+            previewImgUrl: 'http://images.e-healthcare.net/images/2020/09/13/images20091319492691182.png',
             previewImgFile: null,
             Editor: null,
             editorState: EditorState.createEmpty(),
@@ -70,7 +70,6 @@ export default class Index extends React.Component {
     }
 
     async save() {
-        console.log('>>>>>>>>>>>>>>');
         try {
             let { previewImgUrl, previewImgFile, editorState } = this.state;
             let advDesc = draftToHtml(convertToRaw(editorState.getCurrentContent()))

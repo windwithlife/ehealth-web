@@ -40,7 +40,13 @@ export default class Login extends React.Component{
         return (
             <div className="con">  
                 <div className="con_left">
-                    <img src="https://dimg02.c-ctrip.com/images/10081e000001ftgsm99A3.jpg"></img>
+                    <img src="http://images.e-healthcare.net/images/2020/09/13/images20091315043184415.png"></img>
+                    <div className="con_left_desc_con">
+                        <div className="con_left_desc_wrap">
+                            <div className="con_left_desc_chinese">E健云运营后台</div>
+                            <div className="con_left_desc_english">OPERATION SYSTEM</div>
+                        </div>
+                    </div>
                 </div>
                 <div className="con_right">
                     <div className="input_con">

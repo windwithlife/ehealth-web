@@ -70,6 +70,7 @@ export default class Index extends React.Component {
     }
 
     async save() {
+        console.log('>>>>>>>>>>>>>>');
         try {
             let { previewImgUrl, previewImgFile, editorState } = this.state;
             let advDesc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
@@ -122,14 +123,14 @@ export default class Index extends React.Component {
                     <div key={module.leftDesc} className="base_info_con_right_small_con">
                         <div className="base_info_con_right_first">开始时间</div>
                         <div className="base_info_con_right_second">
-                            <DatePicker showTime style={{ width: "18%", height: "24px" }}
+                            <DatePicker showTime style={{ width: "26%", height: "24px" }}
                                 onOk={this.timeOk.bind(this, "START")} />
                         </div>
                     </div>
                     <div key={module.leftDesc} className="base_info_con_right_small_con">
                         <div className="base_info_con_right_first">结束时间</div>
                         <div className="base_info_con_right_second">
-                            <DatePicker showTime style={{ width: "18%", height: "24px" }}
+                            <DatePicker showTime style={{ width: "26%", height: "24px" }}
                                 onOk={this.timeOk.bind(this, "END")} />
                         </div>
                     </div>
@@ -144,18 +145,10 @@ export default class Index extends React.Component {
                         )
                     }
 
-                    <div className="save">
-                        {/* <Button onClick={this.save.bind(this)}>保存</Button> */}
+                    <div className="save"  onClick={this.save.bind(this)}>
                         <div className="save_btn" onClick={module.bindEvent}>保存</div>
                     </div>
                 </div>
-                {/* <>
-                    <h1>文章标题</h1>
-                    <Input onChange={this.titleInputChange.bind(this)}></Input>
-                </> */}
-
-
-
             </div>
         )
     }

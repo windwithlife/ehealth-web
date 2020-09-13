@@ -195,7 +195,7 @@ export default class Index extends React.Component {
                                             <div key={module.leftDesc} className="base_info_con_right_small_con">
                                                 <div className="base_info_con_right_first">{module.leftDesc}</div>
                                                 <div className="base_info_con_right_second">
-                                                    <DatePicker showTime style={{ width:"18%",height:"24px" }} 
+                                                    <DatePicker showTime style={{ width:"26%",height:"24px" }} 
                                                         onOk={module.bindEvent} />
                                                 </div>
                                             </div>

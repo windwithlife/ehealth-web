@@ -1,7 +1,43 @@
+@import "./minix.less";
 .con{
-    width: 80vw;
-    position: relative;
-    margin: 0 auto;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    display: flex;
+    .con_left{
+        flex-grow: 1;
+    }
+    .con_right{
+        height: 100vh;
+        flex-shrink: 0;
+        width: 500px;
+        position: relative;
+        .input_con{
+            position: absolute;
+            top:46%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            .login_btn{
+                display: inline-block;
+                background: @base_color_blue;
+                color: #fff;
+                padding: 15px 24px;
+                font-size: 24px;
+                border-radius: 6px;
+            }
+            input{
+                display: block;
+                padding: 15px 20px;
+                font-size: 24px;
+                color: #53667A;
+                width: 360px;
+                height: 60px;
+                border: 2px dashed #F2F5FC;
+                margin-bottom: 40px;
+            }
+        }
+    }
     .ant-input-suffix{
         margin-right: 8px !important;
     }

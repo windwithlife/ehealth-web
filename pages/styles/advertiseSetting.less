@@ -1,20 +1,31 @@
-.lecture_setting_con{
-    
+
+@import "./minix.less";
+.advertise_setting_con{
+    padding: 20px 40px 0px 40px;
     .new_setup_btn{
-        margin: 20px 20px 0px 20px;
+        background: @base_color_blue;
+        padding: 3px 14px;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        margin-bottom: 20px;
+        margin-left: 100%;
+        transform: translate(-100%,0px) !important;
     }
     .content_con{
-        padding: 20px;
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid gray;
+        border-bottom: 1px solid @base_color_grey;
+        background: #fff;
+        padding: 20px 50px 20px 30px;
         .content_con_left{  
             display: flex;
             justify-content: flex-start;
+            flex-grow: 1;
             .content_con_left_img_con{
-                margin-right: 8px;
-                width: 260px;
-                height: 180px;
+                margin-right: 20px;
+                width: 240px;
+                height: 150px;
                 position: relative;
                 .content_con_left_img_tag{
                     position: absolute;
@@ -24,15 +35,35 @@
                 }
             }
             .content_con_left_total_con{
-                padding: 10px 0px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
+                flex-grow: 1;
+                h1{
+                    margin-bottom: 30px;
+                    font-size: 14px;
+                    color: #333;
+                }
+                div{
+                    margin-bottom: 10px;
+                    color: rgba(0,0,0,0.15);
+                    font-size: 14px;
+                }
                 .content_con_left_doctor_con{
                     display: flex;
                     align-items:center;
                 }
             }
+            .status_con{
+                margin: auto;
+                color: @base_color_orange;
+                flex-shrink: 0;
+                .operate_btn{
+                    margin: auto;
+                    background: @base_color_orange;
+                    padding: 3px 14px;
+                    border-radius: 13px;
+                    color: #fff;
+                }
+            }
+
         }
         .content_con_right{
             display: flex;

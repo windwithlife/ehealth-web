@@ -86,10 +86,10 @@ export default class LectureSetting extends React.Component{
                             btn_module = (
                                 <>
                                     <Button  onClick={this.publish.bind(this,item.id,1)}>
-                                            立即发布
+                                        立即发布
                                     </Button> &nbsp;&nbsp;&nbsp;
                                     <Button  onClick={this.publish.bind(this,item.id,3)}>
-                                        下架
+                                        立即下架
                                     </Button>
                                 </>
                             )
@@ -97,7 +97,7 @@ export default class LectureSetting extends React.Component{
                         if(item.roomStatus == 2 && item.publishStatus == 1){
                             btn_module = (
                                 <Button  onClick={this.publish.bind(this,item.id,3)}>
-                                    下架
+                                    立即下架
                                 </Button>
                             )
                         }
@@ -108,27 +108,32 @@ export default class LectureSetting extends React.Component{
                                     <div className="content_con_left_img_con">
                                         <img className="img_base" src={item.roomPicPath}></img>
                                         <div className="content_con_left_img_tag">
-                                            { item.roomStatus == 0 && ('未开始') }
-                                            { item.roomStatus == 1 && ('直播中') }
-                                            { item.roomStatus == 2 && ('已结束') }
+                                          
                                             { item.publishStatus == 0 && (' 未发布') }
                                             { item.publishStatus == 1 && (' 已发布') }
                                             { item.publishStatus == 2 && (' 已下架') }
+                                        </div>
+                                        <div className="content_con_left_bottom_tag">
+                                        <div className="content_con_left_bottom_square">
+                                            { item.roomStatus == 0 && ('未开始') }
+                                            { item.roomStatus == 1 && ('直播中') }
+                                            { item.roomStatus == 2 && ('已结束') }
+                                        </div>
                                         </div>
                                     </div>
                                     <div className="content_con_left_total_con">
                                         <h1>{item.roomTitle}</h1>
                                         <div className="content_con_left_doctor_con">
                                             <div>
-                                                <span className="iconfont icon-yonghutouxiang">&nbsp;&nbsp;{item.userTrueName}&nbsp;{item.positionName}&nbsp;&nbsp;&nbsp;</span>
-                                                <span className="iconfont icon-shipin">&nbsp;&nbsp;{item.playNumber}&nbsp;&nbsp;&nbsp;</span>
-                                                <span className="iconfont icon-clock">&nbsp;&nbsp;{item.liveStartDate}&nbsp;&nbsp;&nbsp;</span>
+                                                {!!item.playNumber && <span className="iconfont icon-iconset0481">&nbsp;&nbsp;{item.playNumber}&nbsp;&nbsp;&nbsp;</span>} 
+                                                {!!item.liveStartDate && <span className="iconfont icon-clock">&nbsp;&nbsp;{item.liveStartDate}&nbsp;&nbsp;&nbsp;</span>} 
+                                                {!!item.userTrueName && !!item.positionName && <span className="iconfont icon-yonghutouxiang">&nbsp;&nbsp;{item.userTrueName}&nbsp;{item.positionName}&nbsp;&nbsp;&nbsp;</span>}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="content_con_right">
-                                    <Button onClick={this.lookDetail.bind(this,item.id)}>查看详情</Button>
+                                    <Button className="content_con_right_look_detail" onClick={this.lookDetail.bind(this,item.id)}>查看详情</Button>
                                     <div style={{display:'flex'}}>
                                         {btn_module}
                                     </div>

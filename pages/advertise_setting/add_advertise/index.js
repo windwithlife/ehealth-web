@@ -2,7 +2,7 @@ import React from "react";
 import "../../styles/add_advertise/addAdvertise.less"
 
 import { Breadcrumb, Input, Select, DatePicker, Button, Modal } from 'antd';
-import { uploadFile, getTime, invoke_post,doHref } from "../../../common/index"
+import { uploadFile, getTime, invoke_post, doHref } from "../../../common/index"
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
@@ -21,7 +21,7 @@ export default class Index extends React.Component {
         this.startTime = null;
 
         this.state = {
-            previewImgUrl: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3264589794,202278324&fm=26&gp=0.jpg',
+            previewImgUrl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313123054940.png',
             previewImgFile: null,
             Editor: null,
             editorState: EditorState.createEmpty(),
@@ -70,7 +70,7 @@ export default class Index extends React.Component {
     }
 
     async save() {
-        try{
+        try {
             let { previewImgUrl, previewImgFile, editorState } = this.state;
             let advDesc = draftToHtml(convertToRaw(editorState.getCurrentContent()))
             if (!previewImgFile || !this.endTime || !this.startTime || !this.advTitle || !advDesc) {
@@ -78,72 +78,84 @@ export default class Index extends React.Component {
                 return
             }
 
-            await invoke_post('advertService/addInformation',{
-                advTitle:this.advTitle,
-                advPicPath:previewImgUrl,
-                advDesc:advDesc,
-                startDate:this.startTime,
-                endDate:this.endTime ,
-                advStatus:1, //0:禁用 1:正常 -1:删除)
-                advOrder:1,
+            await invoke_post('advertService/addInformation', {
+                advTitle: this.advTitle,
+                advPicPath: previewImgUrl,
+                advDesc: advDesc,
+                startDate: this.startTime,
+                endDate: this.endTime,
+                advStatus: 1, //0:禁用 1:正常 -1:删除)
+                advOrder: 1,
             })
             doHref('advertise_setting');
-        }catch(error){
+        } catch (error) {
             console.log('error: ', error);
         }
     }
     render() {
         const { previewImgUrl, Editor, editorState } = this.state;
         return (
-            <div className="lecture_detail_con">
+            <div className="add_advertise_con">
                 <Breadcrumb separator=">">
                     <Breadcrumb.Item href="/ehealth_web/advertise_setting">广告设置</Breadcrumb.Item>
                     <Breadcrumb.Item>新增广告</Breadcrumb.Item>
                 </Breadcrumb>
+                <div className="add_advertise_wrap">
+                    <>
+                        <div className="picture_con">
+                            <div className="picture_con_left">
+                                <img className="img_base" src={previewImgUrl}></img>
+                            </div>
+                            <div className="picture_con_right">
+                                <div className="previewBtn">预览</div>
+                                <div onClick={this.uploadLocalPic.bind(this)} className="previewBtn uploadBtn">上传</div>
+                                <input type="file" onChange={this.selectedLocalPic.bind(this)}></input>
+                            </div>
+                        </div>
+                    </>
+                    <div className="base_info_con_right_small_con">
+                        <div className="base_info_con_right_first">文章标题</div>
+                        <div className="base_info_con_right_second">
+                            <Input onChange={this.titleInputChange.bind(this)}></Input>
+                        </div>
+                    </div>
+                    <div key={module.leftDesc} className="base_info_con_right_small_con">
+                        <div className="base_info_con_right_first">开始时间</div>
+                        <div className="base_info_con_right_second">
+                            <DatePicker showTime style={{ width: "18%", height: "24px" }}
+                                onOk={this.timeOk.bind(this, "START")} />
+                        </div>
+                    </div>
+                    <div key={module.leftDesc} className="base_info_con_right_small_con">
+                        <div className="base_info_con_right_first">结束时间</div>
+                        <div className="base_info_con_right_second">
+                            <DatePicker showTime style={{ width: "18%", height: "24px" }}
+                                onOk={this.timeOk.bind(this, "END")} />
+                        </div>
+                    </div>
+                    {
+                        !!Editor && (
+                            <div className="artical_module_con">
+                                <div className="title_desc">文章内容</div>
+                                <Editor editorState={editorState} toolbarClassName="toolbarClassName" wrapperClassName="wrapperClassName"
+                                    editorClassName="editorClassName" onEditorStateChange={this.onEditorStateChange.bind(this)} />
+                            </div>
 
-                <>
+                        )
+                    }
+
+                    <div className="save">
+                        {/* <Button onClick={this.save.bind(this)}>保存</Button> */}
+                        <div className="save_btn" onClick={module.bindEvent}>保存</div>
+                    </div>
+                </div>
+                {/* <>
                     <h1>文章标题</h1>
                     <Input onChange={this.titleInputChange.bind(this)}></Input>
-                </>
+                </> */}
 
 
-                <>
-                    <h1>文章封面图</h1>
-                    <div className="picture_con">
-                        <div className="picture_con_left">
-                            <img className="img_base" src={previewImgUrl}></img>
-                        </div>
-                        <div className="picture_con_right">
-                            <div className="previewBtn">预览</div>
-                            <div onClick={this.uploadLocalPic.bind(this)} className="previewBtn uploadBtn">上传</div>
-                            <input type="file" onChange={this.selectedLocalPic.bind(this)}></input>
-                        </div>
-                    </div>
-                </>
 
-                <div className="time_module_con">
-                    <div style={{ marginRight: "20px" }}>
-                        开始时间 <DatePicker onOk={this.timeOk.bind(this, "START")} showTime style={{ width: 300 }} />
-                    </div>
-                    <div>
-                        结束时间 <DatePicker onOk={this.timeOk.bind(this, "END")} showTime style={{ width: 300 }} />
-                    </div>
-                </div>
-
-                {
-                    !!Editor && (
-                        <div className="artical_module_con">
-                            <h1>文章内容</h1>
-                            <Editor editorState={editorState} toolbarClassName="toolbarClassName" wrapperClassName="wrapperClassName"
-                                editorClassName="editorClassName" onEditorStateChange={this.onEditorStateChange.bind(this)} />
-                        </div>
-
-                    )
-                }
-
-                <div className="save">
-                    <Button onClick={this.save.bind(this)}>保存</Button>
-                </div>
             </div>
         )
     }

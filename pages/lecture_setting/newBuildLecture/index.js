@@ -32,13 +32,13 @@ export default class Index extends React.Component {
 
 
         this.state = {
-            previewImgUrl: 'http://images.koudaibook.com/images/2020/08/05/images20080520490978428.jpg',
+            previewImgUrl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313123054940.png',
             previewImgFile: null,
 
-            preview_huiyiricheng_imgurl: 'http://images.koudaibook.com/images/2020/08/05/images20080520503391470.jpg',
+            preview_huiyiricheng_imgurl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313112259671.png',
             preview_huiyiricheng_file: null,
 
-            preview_huiyiyulan_imgurl: 'http://images.koudaibook.com/images/2020/08/05/images20080520510262551.jpg',
+            preview_huiyiyulan_imgurl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313295955926.png',
             preview_huiyiyulan_file: null,
         }
 
@@ -130,25 +130,24 @@ export default class Index extends React.Component {
         const { previewImgUrl,preview_huiyiricheng_imgurl,preview_huiyiyulan_imgurl} = this.state;
     
         return (
-            <div className="lecture_detail_con">
+            <div className="new_build_lecture_con">
                 <Breadcrumb separator=">">
                     <Breadcrumb.Item href={`${config.baseUrl}/lecture_setting`}>讲座设置</Breadcrumb.Item>
                     <Breadcrumb.Item>新建讲座</Breadcrumb.Item>
                 </Breadcrumb>
+            <div className="new_build_lecture_wrap">
                 <div className="picture_con">
                     <div className="picture_con_left">
                         <img className="img_base" src={previewImgUrl}></img>
                     </div>
                     <div className="picture_con_right">
-                        <div className="previewBtn">预览</div>
                         <div onClick={this.uploadLocalPic.bind(this, 'previewImgFile')} className="previewBtn uploadBtn">上传</div>
+                        <div className="previewBtn">预览</div>
                         <input type="file" onChange={this.selectedLocalPic.bind(this, 'previewImgFile', 'previewImgUrl')}></input>
                     </div>
                 </div>
                 <div className="base_info_con">
-                    <div className="base_info_con_left">
-                        {/* <img className="img_base" src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3264589794,202278324&fm=26&gp=0.jpg"></img> */}
-                    </div>
+
                     <div className="base_info_con_right">
                         {
                             this.modules.map((module) => {
@@ -196,7 +195,7 @@ export default class Index extends React.Component {
                                             <div key={module.leftDesc} className="base_info_con_right_small_con">
                                                 <div className="base_info_con_right_first">{module.leftDesc}</div>
                                                 <div className="base_info_con_right_second">
-                                                    <DatePicker showTime style={{ width: 300 }} 
+                                                    <DatePicker showTime style={{ width:"18%",height:"24px" }} 
                                                         onOk={module.bindEvent} />
                                                 </div>
                                             </div>
@@ -215,9 +214,7 @@ export default class Index extends React.Component {
                                     case 'button':
                                         return (
                                             <div key={module.leftDesc} className="base_info_con_right_small_con">
-                                                <div className="base_info_con_right_first">
-                                                    <Button onClick={module.bindEvent}>保存</Button>
-                                                </div>
+                                                  <div className="save_btn" onClick={module.bindEvent}>保存</div>
                                             </div>
                                         )
                                         break;
@@ -225,22 +222,27 @@ export default class Index extends React.Component {
                                         return (
                                             <div className="base_info_con_right_small_con">
                                                 <div  className="base_info_con_right_small_con_left">
-                                                    <div>会议日程</div>
-                                                    <div className="picture_con_right">
-                                                        <div className="previewBtn">预览</div>
-                                                        <div onClick={this.uploadLocalPic.bind(this, 'preview_huiyiricheng_file')} className="previewBtn uploadBtn">上传</div>
-                                                        <input type="file" onChange={this.selectedLocalPic.bind(this, 'preview_huiyiricheng_file', 'preview_huiyiricheng_imgurl')}></input>
+                                                    <div className="desc_con">
+                                                        <span className="desc">会议日程</span> 
+                                                        <span onClick={this.uploadLocalPic.bind(this, 'preview_huiyiricheng_file')} className="upload_btn base_btn">上传</span>
+                                                        <span className="preview_con">
+                                                            <input type="file" onChange={this.selectedLocalPic.bind(this, 'preview_huiyiricheng_file', 'preview_huiyiricheng_imgurl')}></input>
+                                                            <div className="preview_btn base_btn">预览</div> 
+                                                        </span>
                                                     </div>
                                                     <div className="img_con">
                                                         <img className="img_base" src={preview_huiyiricheng_imgurl}></img>
                                                     </div>
                                                 </div>
-                                                <div className="base_info_con_right_small_con_left">
-                                                    <div>会议介绍</div>
-                                                    <div className="picture_con_right">
-                                                        <div className="previewBtn">预览</div>
-                                                        <div onClick={this.uploadLocalPic.bind(this, 'preview_huiyiyulan_file')} className="previewBtn uploadBtn">上传</div>
-                                                        <input type="file" onChange={this.selectedLocalPic.bind(this, 'preview_huiyiyulan_file', 'preview_huiyiyulan_imgurl')}></input>
+
+                                                <div  className="base_info_con_right_small_con_left">
+                                                    <div className="desc_con">
+                                                        <span className="desc">会议介绍</span> 
+                                                        <span onClick={this.uploadLocalPic.bind(this, 'preview_huiyiyulan_file')} className="upload_btn base_btn" >上传</span>
+                                                        <span className="preview_con">
+                                                            <input type="file" onChange={this.selectedLocalPic.bind(this, 'preview_huiyiyulan_file', 'preview_huiyiyulan_imgurl')}></input>
+                                                            <div className="preview_btn base_btn">预览</div> 
+                                                        </span>
                                                     </div>
                                                     <div className="img_con">
                                                         <img className="img_base" src={preview_huiyiyulan_imgurl}></img>
@@ -254,6 +256,7 @@ export default class Index extends React.Component {
                         }
                     </div>
                 </div>
+            </div>
             </div>
         )
     }

@@ -3,7 +3,9 @@ const withCSS = require('@zeit/next-css');
 const withLess = require('@zeit/next-less');
 const withPlugins = require('next-compose-plugins');
 const {baseUrl} = require("./config.json")
-
+const logger = require("./tool_server/logger")(__filename);
+const ENV = process.env.NODE_ENV;
+logger.info('process.env.NODE_ENV : ', ENV);
 
 const stylePlugins = [
   [ 
@@ -39,7 +41,7 @@ const stylePlugins = [
 
 const config = {
   lessLoaderOptions: { javascriptEnabled: true},
-  assetPrefix: baseUrl,
+  assetPrefix: ENV == "production" ? baseUrl : "",
   async rewrites() {
     return [
       {

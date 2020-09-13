@@ -59,7 +59,7 @@ export default class Wrap extends React.Component {
           <Head></Head>
           <Content style={{ height: 'calc(100% - 34px)', overflow: 'scroll' }}>
             <Layout style={{ height: '100%',flexDirection: 'row' }}>
-              <Sider style={{ background: "#fff",height:"100%" }}>
+              <Sider style={{ background: "#fff",height:"100%",borderRight:"1px solid #F7F8FA" }}>
                 <Menu onClick={this.handleClick.bind(this)} defaultSelectedKeys={[defaultSelectedKeys]} mode="inline">
                   { menuList.map((item)=> <Menu.Item key={item.key}>{item.desc}</Menu.Item>) }
                 </Menu>
@@ -69,7 +69,7 @@ export default class Wrap extends React.Component {
               </Content>
             </Layout>
           </Content >
-          <Footer theme="dark" style={{ textAlign: 'center', background: '#eee' }}>XCODER ©2020 Created by X Team</Footer>
+          {/* <Footer theme="dark" style={{ textAlign: 'center', background: '#eee' }}>XCODER ©2020 Created by X Team</Footer> */}
         </Layout>
       </>
     )

@@ -63,7 +63,7 @@ export default class LectureSetting extends React.Component{
         //  “advOrder”:int 排序
 
         return(
-            <div className="lecture_setting_con">
+            <div className="advertise_setting_con">
                 <Button className="new_setup_btn" onClick={this.newSetUp.bind(this)}>新增新闻</Button>
                 {
                     liveList.map((item,idx)=>{
@@ -76,30 +76,14 @@ export default class LectureSetting extends React.Component{
                                     <div className="content_con_left_total_con">
                                         <h1>{item?.advTitle}</h1>
                                         <div className="info_con">
-                                            <span>开始时间 {item?.startDate}</span>&nbsp;&nbsp;&nbsp;
-                                            <span>结束时间 {item?.endDate}</span>
-                                            {item.advStatus == 1 && (
-                                                <div style={{marginTop:"6px"}}>
-                                                    <Button onClick={this.deleteClick.bind(this,item.id)}>删除新闻</Button>
-                                                </div>
-                                            )}
-                                            {
-                                                item.advStatus == -1 && (
-                                                    <div style={{marginTop:"6px"}}>
-                                                        已删除
-                                                    </div>
-                                                )
-                                            }
-                                            {
-                                                item.advStatus == 0 && (
-                                                    <div style={{marginTop:"6px"}}>
-                                                        禁用
-                                                    </div>
-                                                )
-                                            }
-                                            
-
+                                            <div className="iconfont icon-iconset0481">开始时间 {item?.startDate}</div>
+                                            <div className="iconfont icon-iconset0481">结束时间 {item?.endDate}</div>
                                         </div>
+                                    </div>
+                                    <div className="status_con">
+                                        {item.advStatus == 1 && <div className="operate_btn" onClick={this.deleteClick.bind(this,item.id)}>删除新闻</div>}
+                                        {item.advStatus == -1 && <div>已删除</div>}
+                                        {item.advStatus == 0 && <div>禁用</div>}
                                     </div>
                                 </div>
                             </div> 

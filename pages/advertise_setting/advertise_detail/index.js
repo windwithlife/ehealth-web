@@ -46,7 +46,7 @@ export default class Index extends React.Component{
     render(){
         const {previewImgUrl} = this.state;
         return(
-            <div className="lecture_detail_con">
+            <div className="advertise_detail_con">
                 <Breadcrumb separator=">">
                     <Breadcrumb.Item href="/advertise_setting">广告设置</Breadcrumb.Item>
                     <Breadcrumb.Item>广告详情</Breadcrumb.Item>

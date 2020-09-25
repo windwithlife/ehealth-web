@@ -1,29 +1,19 @@
 import React from "react";
-import "../../styles/lecture_detail/lectureDetail.less";
-import {invoke_post,uploadFile,getTime} from "../../../common/index";
-import {Breadcrumb, Input, Select,DatePicker,Button,Modal } from 'antd';
+import "./index.less";
+import {invoke_post,uploadFile,getTime,getQuery,doHref} from "../../../common/index";
+import {Breadcrumb, Input, Select,DatePicker,Modal } from 'antd';
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 import QRCode from 'qrcode.react'
-import Item from "antd/lib/list/Item";
 import config from "../../../config.json"
+import { EditorState, convertToRaw,ContentState } from 'draft-js';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import draftToHtml from 'draftjs-to-html';
+// import htmlToDraft from 'html-to-draftjs';
 
 
 
-function getQuery() {
-    const url = decodeURI(location.search); // 获取url中"?"符后的字串(包括问号)
-    let query = {};
-    if (url.indexOf("?") != -1) {
-        const str = url.substr(1);
-        const pairs = str.split("&");
-        for(let i = 0; i < pairs.length; i ++) {
-             const pair = pairs[i].split("=");
-            query[pair[0]] = pair[1];
-        }
-    }
-    return query ;  // 返回对象
-}
+
 
 export default class Index extends React.Component{
     constructor(props){
@@ -42,11 +32,7 @@ export default class Index extends React.Component{
             previewImgUrl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313123054940.png',
             previewImgFile: null,
 
-            preview_huiyiricheng_imgurl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313112259671.png',
-            preview_huiyiricheng_file: null,
-
-            preview_huiyiyulan_imgurl: 'http://images.e-healthcare.net/images/2020/09/13/images20091313295955926.png',
-            preview_huiyiyulan_file: null,
+            Editor: null,
 
             modules:[{
                 leftDesc:"推流地址",
@@ -72,7 +58,15 @@ export default class Index extends React.Component{
                 defalutVal:"",
                 bindEvent:this.liveTimeOnOk
             },{
-                rightType: 'upload_img',
+                rightType: 'richText',
+                leftDesc: "会议日程",
+                editorState:EditorState.createEmpty(),
+                type:"hiuyiricheng",
+            },{
+                rightType: 'richText',
+                leftDesc: "会议预览",
+                editorState:EditorState.createEmpty(),
+                type:"huiyiyulan",
             },{
                 leftDesc:"",
                 rightType:"button",
@@ -80,31 +74,44 @@ export default class Index extends React.Component{
             }]
         }
     }
-    async componentDidMount(){
+    async initData(){
         try{
             let {id} = getQuery();
-            let result = await invoke_post('liveService/getLiveDetail',{id})
-            let data = result?.data || {};
-            let {roomPicPath,roomQrCodePath,roomSchedulePath,roomDescPath} = data;
+            let data = await invoke_post('liveService/getLiveDetail',{id}).then(res=>res?.data)
+            let htmlToDraft = await import('html-to-draftjs').then(data=>data.default);
+            let {roomPicPath} = data;
             let {modules} = this.state;
-            let newModules = modules.map((item,idx)=>{
+            let newModules = modules.map((item)=>{
                 if(item.leftDesc == '推流地址') item.rightDesc = data?.pushServerUrl;
                 if(item.leftDesc == '串流秘钥') item.rightDesc = data?.pushSecretKey;
                 if(item.leftDesc == '回放地址') item.defalutVal = data?.videoMp4Url;
                 if(item.leftDesc == '会议名') item.defalutVal = data?.roomTitle;
                 if(item.leftDesc == '直播时间') item.defalutVal = data?.liveStartDate;
+                if(item.leftDesc == '会议日程' || item.leftDesc == '会议预览'){
+                    let contentBlock =  '';
+                    if(item.leftDesc == '会议日程') contentBlock = htmlToDraft(data?.roomScheduleInfo || '');
+                    if(item.leftDesc == '会议预览') contentBlock = htmlToDraft(data?.roomIntroduce || '');
+                    if (contentBlock) {
+                        const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+                        const editorState = EditorState.createWithContent(contentState);
+                        item.editorState = editorState;
+                    }
+                }
                 return item;
             })
             this.setState({
-                roomQrCodePath:`http://m.e-healthcare.net/ehealth_h5/live?id=${id}`,
+                roomQrCodePath:`https://m.e-healthcare.net/ehealth_h5/live?id=${id}`,
                 module:newModules,
                 previewImgUrl:roomPicPath,
-                preview_huiyiricheng_imgurl:roomSchedulePath,
-                preview_huiyiyulan_imgurl:roomDescPath
             })         
         }catch(error){
             console.error('onFinish-error: ', error);
         }
+    }
+    async componentDidMount(){
+        const Editor = await import('react-draft-wysiwyg').then((data)=>data.Editor);
+        this.setState({ Editor })
+        this.initData();
     }
     playBackAddressInputOnChange(event){ //回放地址
         this.playBackAddress = event.currentTarget.value;
@@ -115,12 +122,10 @@ export default class Index extends React.Component{
     async btnSaveClick(){
         try{
             let {id} = getQuery();
-            let {previewImgUrl,preview_huiyiricheng_imgurl,preview_huiyiyulan_imgurl,modules} = this.state;
+            let {previewImgUrl,modules} = this.state;
             let params = {
                 id,
                 roomPicPath:previewImgUrl,
-                roomSchedulePath:preview_huiyiricheng_imgurl,
-                roomDescPath:preview_huiyiyulan_imgurl,
             };
             if(this.liveTimeOnOkVal) {
                 let {nowOfDay} = getTime(this.liveTimeOnOkVal);
@@ -141,9 +146,16 @@ export default class Index extends React.Component{
                 let roomTitle = modules.filter((item)=>item.leftDesc=='会议名').shift().defalutVal;
                 params.roomTitle = roomTitle;
             }
-            
+            modules.forEach((item)=>{
+                if(item.leftDesc == '会议日程'){
+                    params.roomScheduleInfo = draftToHtml(convertToRaw(item.editorState.getCurrentContent()));
+                }
+                if(item.leftDesc == '会议预览'){
+                    params.roomIntroduce = draftToHtml(convertToRaw(item.editorState.getCurrentContent()));
+                }
+            })
             await invoke_post('liveService/updateLive',params);
-            Modal.info({content:'修改成功'});
+            doHref('lecture_setting');
         }catch(error){
             console.log('btnSaveClick_error: ', error);
         }
@@ -159,6 +171,25 @@ export default class Index extends React.Component{
         obj[imgUrl] = URL.createObjectURL(__file)
         this.setState(obj)
     }
+
+    onEditorStateChange(type, editorState) {
+        let {modules} = this.state;
+        if (type == "hiuyiricheng") {
+            modules.forEach((item) => {
+                if(item.leftDesc == '会议日程'){
+                    item.editorState = editorState;
+                }
+            });
+        }
+        if (type == "huiyiyulan") {
+            modules.forEach((item) => {
+                if(item.leftDesc == '会议预览'){
+                    item.editorState = editorState;
+                }
+            });
+        }
+        this.setState({modules})
+    }
     async uploadLocalPic(type) { //上传本地图片
         const file = this.state[type];
         if(!file){
@@ -171,17 +202,12 @@ export default class Index extends React.Component{
         if(type == 'previewImgFile') {
             this.setState({ previewImgUrl:picPath})
         }
-        if(type == 'preview_huiyiricheng_file') {
-            this.setState({ preview_huiyiricheng_imgurl:picPath})
-        }
-        if(type == 'preview_huiyiyulan_file') {
-            this.setState({ preview_huiyiyulan_imgurl:picPath})
-        }
+       
         Modal.info({content:'上传成功'})
     }
 
     render(){
-        const { previewImgUrl,preview_huiyiricheng_imgurl,preview_huiyiyulan_imgurl,roomQrCodePath,modules } = this.state;
+        const { previewImgUrl,roomQrCodePath,modules,Editor} = this.state;
         return(
             <div className="lecture_detail_con">
                 <Breadcrumb separator=">">
@@ -270,37 +296,25 @@ export default class Index extends React.Component{
                                                      <div className="save_btn" onClick={module.bindEvent}>保存</div>
                                                 </div>
                                             )
-                                        case "upload_img" :
+                                        case "richText" :
                                             return (
-                                                <div className="base_info_con_right_small_con">
-                                                    <div  className="base_info_con_right_small_con_left">
-                                                        <div className="desc_con">
-                                                            <span className="desc">会议日程</span> 
-                                                            <span onClick={this.uploadLocalPic.bind(this, 'preview_huiyiricheng_file')} className="upload_btn base_btn">上传</span>
-                                                            <span className="preview_con">
-                                                                <input type="file" onChange={this.selectedLocalPic.bind(this, 'preview_huiyiricheng_file', 'preview_huiyiricheng_imgurl')}></input>
-                                                                <div className="preview_btn base_btn">预览</div> 
-                                                            </span>
-                                                        </div>
-                                                        <div className="img_con">
-                                                            <img className="img_base" src={preview_huiyiricheng_imgurl}></img>
-                                                        </div>
-                                                    </div>
-    
-                                                    <div  className="base_info_con_right_small_con_left">
-                                                        <div className="desc_con">
-                                                            <span className="desc">会议介绍</span> 
-                                                            <span onClick={this.uploadLocalPic.bind(this, 'preview_huiyiyulan_file')} className="upload_btn base_btn" >上传</span>
-                                                            <span className="preview_con">
-                                                                <input type="file" onChange={this.selectedLocalPic.bind(this, 'preview_huiyiyulan_file', 'preview_huiyiyulan_imgurl')}></input>
-                                                                <div className="preview_btn base_btn">预览</div> 
-                                                            </span>
-                                                        </div>
-                                                        <div className="img_con">
-                                                            <img className="img_base" src={preview_huiyiyulan_imgurl}></img>
+                                                <>
+                                                    <div className="base_info_con_right_small_con">
+                                                        <div className="base_info_con_right_small_con_left">
+                                                            <div className="desc_con">
+                                                            <span className="desc">{module.leftDesc}</span>
+                                                                {
+                                                                    !!Editor && (
+                                                                        <div className="editor_con">
+                                                                            <Editor editorState={module.editorState} onEditorStateChange={this.onEditorStateChange.bind(this, module.type)}
+                                                                                toolbarClassName="toolbarClassName" wrapperClassName="wrapperClassName" editorClassName="editorClassName" />
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </>
                                             )
                                     }
                                 })

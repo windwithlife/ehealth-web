@@ -3,6 +3,20 @@ import { Form, Input, Button, Checkbox, Modal } from 'antd';
 import config from "../config.json"
 const isServer = typeof window == 'undefined';
 
+export function getQuery() {
+    const url = decodeURI(location.search); // 获取url中"?"符后的字串(包括问号)
+    let query = {};
+    if (url.indexOf("?") != -1) {
+        const str = url.substr(1);
+        const pairs = str.split("&");
+        for(let i = 0; i < pairs.length; i ++) {
+             const pair = pairs[i].split("=");
+            query[pair[0]] = pair[1];
+        }
+    }
+    return query ;  // 返回对象
+}
+
 export function doHref(path=''){
     location.href = `${location.origin}${config.baseUrl}/${path}` //首页登录成功处理
 }
@@ -41,7 +55,7 @@ export const Loading = {
     hide() {
         if (!isServer) {
             let divEle = document.querySelector('.div_loading_con');
-            if (!!divEle) document.body.removeChild(divEle);
+            if (divEle) document.body.removeChild(divEle);
         }
     }
 }
@@ -57,7 +71,7 @@ export const checkStatus = async response => {
 }
 function dealToken(result) {
     let { token = '', status, data } = result;//status 响应状态(0:失败 1:成功  2:未登录c)
-    if (!!data.token) token = data.token;
+    if (data.token) token = data.token;
 
     switch (status) {
         case 0: {
@@ -80,7 +94,7 @@ function dealToken(result) {
 export async function invoke_post(url, params = {}) {
     try {
         Loading.show();
-        let urlPrefix = 'https://service.e-healthcare.net/meeting-server/pc/'
+        let urlPrefix = 'https://soagateway.e-healthcare.net/meeting-server/pc/'
         axios.defaults.withCredentials = true;
         axios.defaults.crossDomain = true;
         let token = localStorage.getItem('token');
@@ -120,4 +134,3 @@ export async function uploadFile(file) {
         throw error;
     }
 }
-

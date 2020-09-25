@@ -1,6 +1,16 @@
-@import "../minix.less";
+@import "../../styles/minix.less";
 .lecture_detail_con{
     padding: 28px 40px 0px 40px;
+    .wrapperClassName{
+        .toolbarClassName{
+            border: 1px solid grey;
+        }
+        .editorClassName{
+            padding: 6px;
+            height: 200px;
+            border: 1px solid grey;
+        }
+    }
     .lecture_detail_wrap{
         margin-top: 28px;
         background-color: #fff;
@@ -88,7 +98,8 @@
                         align-items: center;
                         margin-right: 60px;
                         .desc{
-                           
+                            flex-shrink: 0;
+                            margin-right: 10px;
                         }
                         .base_btn{
                             padding: 4px 28px;

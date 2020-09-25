@@ -1,4 +1,4 @@
-@import "../minix.less";
+@import "../../styles/minix.less";
 .ant-picker-now{
     display: none !important;
 }
@@ -8,6 +8,16 @@
     color: #fff;
 }
 .new_build_lecture_con{
+    .wrapperClassName{
+        .toolbarClassName{
+            border: 1px solid grey;
+        }
+        .editorClassName{
+            padding: 6px;
+            height: 200px;
+            border: 1px solid grey;
+        }
+    }
     padding: 28px 40px 0px 40px;
     .new_build_lecture_wrap{
         margin-top: 28px;
@@ -81,8 +91,15 @@
                         display: flex;
                         align-items: center;
                         margin-right: 60px;
+                        .local_imge_to_cdn_url{
+                            color: #C6C6C6;
+                            font-size: 14px;
+                            padding: 2px 4px;
+                            margin-left: 20px;
+                        }
                         .desc{
-                           
+                            flex-shrink: 0;
+                            margin-right: 20px;
                         }
                         .base_btn{
                             padding: 4px 28px;

@@ -11,9 +11,6 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 
 export default class Index extends React.Component {
-    static async getInitialProps({ router, req, res, initializeStoreObj }) {
-        return {}
-    }
     constructor(props) {
         super(props);
         this.advTitle = '';
@@ -36,7 +33,6 @@ export default class Index extends React.Component {
     titleInputChange(event) {
         this.advTitle = event.currentTarget.value;
     }
-
 
     selectedLocalPic(event) {
         let file = event.target.files[0];

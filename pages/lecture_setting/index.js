@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/lectureSetting.less"
+import "./lectureSetting.less"
 import { Button,Modal } from 'antd';
 import {invoke_post,doHref} from "../../common/index"
 

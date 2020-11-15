@@ -1,18 +1,13 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox ,Modal} from 'antd';
+import {Modal} from 'antd';
 
 
-import "./styles/index.less";
-import {invoke_post,Loading} from "../common/index"
+import "./index.less";
+import {invoke_post} from "../common/index"
 React.createRef()
 
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16,},
-};
+
+
 
 export default class Login extends React.Component{
     constructor(props){
@@ -35,12 +30,12 @@ export default class Login extends React.Component{
             console.error('onFinish-error: ', error);
         }
     }
-
     render(){
         return (
             <div className="con">  
                 <div className="con_left">
                     <img src="http://images.e-healthcare.net/images/2020/09/13/images20091315043184415.png"></img>
+                    {/* <img src=" http://images.e-healthcare.net/images/2020/11/06/images20110614413411622.jpg"></img>  */}
                     <div className="con_left_desc_con">
                         <div className="con_left_desc_wrap">
                             <div className="con_left_desc_chinese">E健云运营后台</div>

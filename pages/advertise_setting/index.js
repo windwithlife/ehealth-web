@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/advertiseSetting.less"
+import "./advertiseSetting.less"
 import { Button,Modal } from 'antd';
 import {invoke_post,doHref} from "../../common/index"
 import config from "../../config.json";

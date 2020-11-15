@@ -8,6 +8,7 @@ import draftToHtml from 'draftjs-to-html';
 const { Option } = Select;
 const { TextArea } = Input;
 import config from "../../../config.json"
+import myBlockRenderer from "../../../common/richEditorBase";
 
 
 
@@ -69,6 +70,7 @@ export default class Index extends React.Component {
         })
     }
     onEditorStateChange(type, editorState) {
+        console.log('editorState: ', editorState);
         if (type == "hiuyiricheng") {
             this.setState({ huiyirichengEditorState: editorState });
         }
@@ -251,7 +253,9 @@ export default class Index extends React.Component {
                                                                 {
                                                                     !!Editor && (
                                                                         <div className="editor_con">
-                                                                            <Editor editorState={huiyirichengEditorState} onEditorStateChange={this.onEditorStateChange.bind(this, "hiuyiricheng")}
+                                                                            <Editor editorState={huiyirichengEditorState} 
+                                                                                    blockRendererFn={myBlockRenderer}
+                                                                                    onEditorStateChange={this.onEditorStateChange.bind(this, "hiuyiricheng")}
                                                                                 toolbarClassName="toolbarClassName" wrapperClassName="wrapperClassName" editorClassName="editorClassName" />
                                                                         </div>
                                                                     )
@@ -266,7 +270,9 @@ export default class Index extends React.Component {
                                                                     {
                                                                         !!Editor && (
                                                                             <div className="editor_con">
-                                                                                <Editor editorState={huiyiyulanEditorState} onEditorStateChange={this.onEditorStateChange.bind(this, "huiyiyulan")}
+                                                                                <Editor editorState={huiyiyulanEditorState} 
+                                                                                        blockRendererFn={myBlockRenderer}
+                                                                                        onEditorStateChange={this.onEditorStateChange.bind(this, "huiyiyulan")}
                                                                                     toolbarClassName="toolbarClassName" wrapperClassName="wrapperClassName" editorClassName="editorClassName" />
                                                                             </div>
                                                                         )

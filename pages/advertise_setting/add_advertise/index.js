@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/add_advertise/addAdvertise.less"
+import "./addAdvertise.less"
 
 import { Breadcrumb, Input, Select, DatePicker, Button, Modal } from 'antd';
 import { uploadFile, getTime, invoke_post, doHref } from "../../../common/index"

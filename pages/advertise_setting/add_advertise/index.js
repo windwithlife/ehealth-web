@@ -7,6 +7,7 @@ import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import myBlockRenderer from "../../../common/richEditorBase";
 
 
 
@@ -133,7 +134,9 @@ export default class Index extends React.Component {
                         !!Editor && (
                             <div className="artical_module_con">
                                 <div className="title_desc">文章内容</div>
-                                <Editor editorState={editorState} toolbarClassName="toolbarClassName" wrapperClassName="wrapperClassName"
+                                <Editor editorState={editorState} 
+                                    blockRendererFn={myBlockRenderer}
+                                    toolbarClassName="toolbarClassName" wrapperClassName="wrapperClassName"
                                     editorClassName="editorClassName" onEditorStateChange={this.onEditorStateChange.bind(this)} />
                             </div>
 

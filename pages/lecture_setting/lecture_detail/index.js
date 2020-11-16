@@ -9,6 +9,7 @@ import config from "../../../config.json"
 import { EditorState, convertToRaw,ContentState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
+import myBlockRenderer from "../../../common/richEditorBase";
 // import htmlToDraft from 'html-to-draftjs';
 
 
@@ -306,7 +307,9 @@ export default class Index extends React.Component{
                                                                 {
                                                                     !!Editor && (
                                                                         <div className="editor_con">
-                                                                            <Editor editorState={module.editorState} onEditorStateChange={this.onEditorStateChange.bind(this, module.type)}
+                                                                            <Editor editorState={module.editorState} 
+                                                                                    blockRendererFn={myBlockRenderer}
+                                                                                    onEditorStateChange={this.onEditorStateChange.bind(this, module.type)}
                                                                                 toolbarClassName="toolbarClassName" wrapperClassName="wrapperClassName" editorClassName="editorClassName" />
                                                                         </div>
                                                                     )

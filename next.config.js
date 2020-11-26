@@ -26,21 +26,22 @@ const stylePlugins = [
     */
     withLess,  
     {
-      cssModules:false, //http://www.ruanyifeng.com/blog/2016/06/css_modules.html CSS Modules 用法教程
-      cssLoaderOptions:{
-        importLoaders: 1,
-        minimize:true,
-        // localIdentName: "[local]___[hash:base64:5]", //localIdentName  CSS-Module 定制哈希类名
-      },
+      // cssModules:false, //http://www.ruanyifeng.com/blog/2016/06/css_modules.html CSS Modules 用法教程
+      // cssLoaderOptions:{
+      //   importLoaders: 1,
+      //   minimize:true,
+      //   // localIdentName: "[local]___[hash:base64:5]", //localIdentName  CSS-Module 定制哈希类名
+      // },
       lessLoaderOptions: {
-        javascriptEnabled: true,
+        lessOptions:{
+          javascriptEnabled: true,
+        }
       },
     }
   ]
 ]
 
 const config = {
-  lessLoaderOptions: { javascriptEnabled: true},
   assetPrefix: ENV == "production" ? baseUrl : "",
   async rewrites() {
     return [

@@ -1,6 +1,5 @@
 import React from "react";
 import {observer, inject} from 'mobx-react'
-import "../styles/testMobx/testMobx.less";
 
 @inject("testStore")
 @observer

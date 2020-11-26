@@ -40,6 +40,7 @@ function Head(props){
 export default class Wrap extends React.Component {
   static async getInitialProps(router){
     const {pathname,query,asPath,basePath,}  = router;
+
     const pathArr = asPath.replace(/\//,"").split('/');
     return { pathArr,asPath }
   }
@@ -52,7 +53,9 @@ export default class Wrap extends React.Component {
     const {pathArr,asPath} = this.props;
 
     const defaultSelectedKeys = pathArr[1] || ''
-    if(asPath == `${config.baseUrl}/index`)  return  ( <>{this.props.children}</> )
+
+    if(asPath.includes('index')) return  ( <>{this.props.children}</> )
+    // if(asPath == `${config.baseUrl}/`) 
     return (
       <>   
         <Layout style={{ height: '100%'}}>

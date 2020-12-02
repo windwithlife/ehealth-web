@@ -123,7 +123,7 @@ export async function uploadFile(file) {
         let json = { token, platType: 4, category: 1, version: 1, platForm: "web" };
         formData.append('json', JSON.stringify(json))
         formData.append('file', file);
-        let result = await axios.post('http://images.e-healthcare.net/meeting-server/uploadService/uploadImage', formData, {
+        let result = await axios.post('http://soagateway.e-healthcare.net/meeting-server/uploadService/uploadImage', formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         }).then(checkStatus).then(dealToken)
         Loading.hide();

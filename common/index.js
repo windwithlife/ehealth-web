@@ -126,7 +126,7 @@ export async function uploadFile(file) {
         let result = await axios.post('http://soagateway.e-healthcare.net/meeting-server/uploadService/uploadImage', formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         }).then(checkStatus).then(dealToken)
-        Loading.hide();
+        Loading.hide();  
         return result;
     } catch (error) {
         Loading.hide();

@@ -6,7 +6,6 @@ import {getTime,doHref} from "../../../common/utils"
 import { uploadFile,invoke_post} from "../../../common/Network"
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
-
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import myBlockRenderer from "../../../common/richEditorBase";
 

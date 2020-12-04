@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Form, Input, Button, Checkbox, Modal } from 'antd';
-import config from "../config.json"
+
+import config from "./config";
 const isServer = typeof window == 'undefined';
 
 export function getQuery() {
@@ -18,7 +19,7 @@ export function getQuery() {
 }
 
 export function doHref(path=''){
-    location.href = `${location.origin}${config.baseUrl}/${path}` //首页登录成功处理
+    location.href = `${location.origin}${config.application.baseUrl}/${path}` //首页登录成功处理
 }
 
 export function getTime(timeStamp = '') {
@@ -80,7 +81,7 @@ function dealToken(result) {
         }
         case 1: {
             localStorage.setItem('token', token);
-            if (location.pathname == `${config.baseUrl}/index`) doHref('lecture_setting'); //首页登录成功处理
+            if (location.pathname == `${config.application.baseUrl}/index`) doHref('lecture_setting'); //首页登录成功处理
             return result;
         }
         case 2: {

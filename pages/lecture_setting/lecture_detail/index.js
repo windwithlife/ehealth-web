@@ -5,7 +5,7 @@ import {Breadcrumb, Input, Select,DatePicker,Modal } from 'antd';
 const { Option } = Select;
 const { TextArea } = Input;
 import QRCode from 'qrcode.react'
-import config from "../../../config.json"
+import config from "../../../common/config";
 import { EditorState, convertToRaw,ContentState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
@@ -212,7 +212,7 @@ export default class Index extends React.Component{
         return(
             <div className="lecture_detail_con">
                 <Breadcrumb separator=">">
-                    <Breadcrumb.Item href={`${config.baseUrl}/lecture_setting`}>讲座设置</Breadcrumb.Item>
+                    <Breadcrumb.Item href={`${config.application.baseUrl}/lecture_setting`}>讲座设置</Breadcrumb.Item>
                     <Breadcrumb.Item>讲座详情</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="lecture_detail_wrap">

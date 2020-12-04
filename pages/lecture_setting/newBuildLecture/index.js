@@ -7,7 +7,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 const { Option } = Select;
 const { TextArea } = Input;
-import config from "../../../config.json"
+import config from "../../../common/config"
 import myBlockRenderer from "../../../common/richEditorBase";
 
 
@@ -148,7 +148,7 @@ export default class Index extends React.Component {
         return (
             <div className="new_build_lecture_con">
                 <Breadcrumb separator=">">
-                    <Breadcrumb.Item href={`${config.baseUrl}/lecture_setting`}>讲座设置</Breadcrumb.Item>
+                    <Breadcrumb.Item href={`${config.application.baseUrl}/lecture_setting`}>讲座设置</Breadcrumb.Item>
                     <Breadcrumb.Item>新建讲座</Breadcrumb.Item>
                 </Breadcrumb>
                 <div className="new_build_lecture_wrap">

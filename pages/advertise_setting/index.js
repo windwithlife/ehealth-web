@@ -1,8 +1,10 @@
 import React from "react";
 import "./advertiseSetting.less"
 import { Button,Modal } from 'antd';
-import {invoke_post,doHref} from "../../common/index"
-import config from "../../config.json";
+//import {invoke_post,doHref} from "../../common/index"
+import {invoke_post} from "../../common/Network"
+import {doHref} from "../../common/utils";
+
 
 
 export default class LectureSetting extends React.Component{

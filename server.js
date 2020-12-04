@@ -9,7 +9,8 @@ const handle = app.getRequestHandler();
 const bodyParser = require('body-parser');
 const logger = require("./tool_server/logger")(__filename);
 const {getIPAddress} = require("./tool_server/tools");
-const {baseUrl} = require("./config.json")
+
+const {baseUrl} = require('./common/config').application;
 
 logger.info('process.env.NODE_ENV : ', process.env.NODE_ENV);
 

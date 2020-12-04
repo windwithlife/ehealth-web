@@ -1,0 +1,19 @@
+
+
+{
+    "envName" :"DEV",
+    "application":
+    {
+        "name":"ehealthcare_web",
+        "contextPath": "/ehealth_web",
+        "baseUrl": "/ehealth_web"
+    },
+    "servers":
+    {
+        "soaServer": "https://soagateway.e-healthcare.net",
+        "serverPath": "/meeting-server/pc",
+        "mqttServer" : "mqtt://mq.koudaibook.com:30883/",
+        "resourceServer": "http://soagateway.e-healthcare.net/meeting-server/uploadService/uploadImage"
+    }
+  
+}

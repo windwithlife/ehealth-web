@@ -3,7 +3,7 @@ const { Content, Sider, Footer } = Layout;
 import "./styles/wrap.less"
 import { reaction } from 'mobx';
 import { Button } from 'antd';
-import config from "../config.json";
+
 import {doHref} from "../common/index"
 
 
@@ -55,7 +55,7 @@ export default class Wrap extends React.Component {
     const defaultSelectedKeys = pathArr[1] || ''
 
     if(asPath.includes('index')) return  ( <>{this.props.children}</> )
-    // if(asPath == `${config.baseUrl}/`) 
+   
     return (
       <>   
         <Layout style={{ height: '100%'}}>

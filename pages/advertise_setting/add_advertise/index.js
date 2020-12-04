@@ -2,7 +2,8 @@ import React from "react";
 import "./addAdvertise.less"
 
 import { Breadcrumb, Input, Select, DatePicker, Button, Modal } from 'antd';
-import { uploadFile, getTime, invoke_post, doHref } from "../../../common/index"
+import {getTime,doHref} from "../../../common/utils"
+import { uploadFile,invoke_post} from "../../../common/Network"
 import { EditorState, convertToRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 
